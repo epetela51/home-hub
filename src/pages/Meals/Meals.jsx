@@ -9,6 +9,7 @@ const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
 const Meals = () => {
   const [meals, setMeals] = useState([]);
   const [weeklyMealPlan, setweeklyMealPlan] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const { mealPlan, handlePlanChange } = useMealPlan({
     initialMealPlan: weeklyMealPlan,
@@ -22,8 +23,12 @@ const Meals = () => {
         console.log("weeklyMealPlan from Flask:", data.weeklyPlan);
         setMeals(data.meals);
         setweeklyMealPlan(data.weeklyPlan);
+        setIsLoading(false);
       })
-      .catch((err) => console.error("Error fetching meals:", err));
+      .catch((err) => {
+        console.error("Error fetching meals:", err);
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -31,11 +36,15 @@ const Meals = () => {
       <Button url="/" text="Go Home" />
       <section className="mt-20">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Weekly Meal Plan</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {DAYS_OF_WEEK.map((day) => (
-            <DailyMeal key={day} day={day} mealId={mealPlan[day]} meals={meals} onMealChange={handlePlanChange} />
-          ))}
-        </div>
+        {isLoading ? (
+          <p className="text-2xl text-gray-600">Loading meal plan for the week...</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {DAYS_OF_WEEK.map((day) => (
+              <DailyMeal key={day} day={day} mealId={mealPlan[day]} meals={meals} onMealChange={handlePlanChange} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

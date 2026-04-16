@@ -1,48 +1,17 @@
 import { useCallback, useState } from "react";
 
-const buildInitialMealPlan = (daysOfWeek, seedMeals = []) =>
-  daysOfWeek.reduce((acc, day, index) => {
-    if (seedMeals.length === 0) {
-      return {
-        ...acc,
-        [day]: "",
-      };
-    }
+export const useMealPlan = ({ initialMealPlan = {} }) => {
+  const [mealChange, setmealChange] = useState({});
 
-    const meal = seedMeals[index % seedMeals.length];
-    return {
-      ...acc,
-      [day]: meal?.id ?? "",
-    };
-  }, {});
-
-export const useMealPlan = ({ initialMeals = [], daysOfWeek = [] }) => {
-  const [mealPlan, setMealPlan] = useState(() => buildInitialMealPlan(daysOfWeek, initialMeals));
+  // Merge initialMealPlan with user mealChange (mealChange override initial)
+  const mealPlan = { ...initialMealPlan, ...mealChange };
 
   const handlePlanChange = useCallback((day, mealId) => {
-    setMealPlan((prev) => ({
+    setmealChange((prev) => ({
       ...prev,
       [day]: mealId,
     }));
   }, []);
 
-  const handleResetWeek = useCallback(() => {
-    setMealPlan(buildInitialMealPlan(daysOfWeek));
-  }, [daysOfWeek]);
-
-  const unlinkMealFromPlan = useCallback((mealId) => {
-    if (!mealId) return;
-
-    setMealPlan((prev) =>
-      Object.keys(prev).reduce(
-        (acc, day) => ({
-          ...acc,
-          [day]: prev[day] === mealId ? "" : prev[day],
-        }),
-        {}
-      )
-    );
-  }, []);
-
-  return { mealPlan, handlePlanChange, handleResetWeek, unlinkMealFromPlan };
+  return { mealPlan, handlePlanChange };
 };

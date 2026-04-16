@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { useMealPlan } from "./hooks/useMealPlan";
+import { useFetchMeals } from "./hooks/useFetchMeals";
 
 import Button from "../../components/Button/Button";
 import DailyMeal from "./DailyMeal/DailyMeal";
@@ -7,28 +7,11 @@ import DailyMeal from "./DailyMeal/DailyMeal";
 const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 const Meals = () => {
-  const [meals, setMeals] = useState([]);
-  const [weeklyMealPlan, setweeklyMealPlan] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const { meals, weeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, handlePlanChange } = useMealPlan({
-    initialMealPlan: weeklyMealPlan,
+    initialMealPlan: weeklyPlan,
   });
-
-  useEffect(() => {
-    fetch("/api/meals")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Meals from Flask:", data);
-        setMeals(data.meals);
-        setweeklyMealPlan(data.weeklyPlan);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching meals:", err);
-        setIsLoading(false);
-      });
-  }, []);
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-8">

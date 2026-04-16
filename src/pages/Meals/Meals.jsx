@@ -9,7 +9,7 @@ const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "S
 const Meals = () => {
   const { meals, weeklyPlan, isLoading } = useFetchMeals();
 
-  const { mealPlan, handlePlanChange } = useMealPlan({
+  const { mealPlan, handlePlanChange, handleResetWeek } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
 
@@ -17,7 +17,11 @@ const Meals = () => {
     <div className="p-6 max-w-5xl mx-auto space-y-8">
       <Button url="/" text="Go Home" />
       <section className="mt-20">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Weekly Meal Plan</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Weekly Meal Plan</h2>
+
+        <button onClick={handleResetWeek} className="px-4 py-2 my-6 bg-red-500 text-white rounded hover:bg-red-600 transition">
+          Reset Week
+        </button>
         {isLoading ? (
           <p className="text-2xl text-gray-600">Loading meal plan for the week...</p>
         ) : (

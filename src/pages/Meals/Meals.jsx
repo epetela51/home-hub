@@ -20,7 +20,6 @@ const Meals = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("Meals from Flask:", data);
-        console.log("weeklyMealPlan from Flask:", data.weeklyPlan);
         setMeals(data.meals);
         setweeklyMealPlan(data.weeklyPlan);
         setIsLoading(false);

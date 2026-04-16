@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
+import { useMealPlan } from "./hooks/useMealPlan";
 
 import Button from "../../components/Button/Button";
-
 import DailyMeal from "./DailyMeal/DailyMeal";
 
+const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
 const Meals = () => {
-  const [weekDays, setWeekDays] = useState([]);
+  const [meals, setMeals] = useState([]);
+  const [weeklyMealPlan, setweeklyMealPlan] = useState({});
+
+  const { mealPlan, handlePlanChange } = useMealPlan({
+    initialMealPlan: weeklyMealPlan,
+  });
 
   useEffect(() => {
     fetch("/api/meals")
       .then((res) => res.json())
       .then((data) => {
         console.log("Meals from Flask:", data);
-        console.log("week days: ", Object.keys(data.weeklyPlan));
+        console.log("weeklyMealPlan from Flask:", data.weeklyPlan);
+        setMeals(data.meals);
+        setweeklyMealPlan(data.weeklyPlan);
       })
       .catch((err) => console.error("Error fetching meals:", err));
   }, []);
@@ -21,7 +30,12 @@ const Meals = () => {
     <div className="p-6 max-w-5xl mx-auto space-y-8">
       <Button url="/" text="Go Home" />
       <section className="mt-20">
-        <DailyMeal />
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Weekly Meal Plan</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {DAYS_OF_WEEK.map((day) => (
+            <DailyMeal key={day} day={day} mealId={mealPlan[day]} meals={meals} onMealChange={handlePlanChange} />
+          ))}
+        </div>
       </section>
     </div>
   );

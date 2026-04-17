@@ -1,17 +1,27 @@
-import React from "react";
-import { Home, Zap, Power, Lightbulb } from "lucide-react";
+import React from 'react';
+import { Home, Zap, Power, Lightbulb } from 'lucide-react';
 
-import homeData from "../../data/breakerData.json";
-import { useBreakerSelection } from "./useBreakerSelection";
+import homeData from '../../data/breakerData.json';
+import { useBreakerSelection } from './useBreakerSelection';
 
-import Button from "../../components/Button/Button";
-import SelectField from "../../components/SelectField/SelectField";
-import UnknownAccordion from "../../components/UnknownAccordian/UnknownAccordian";
+import Button from '../../components/Button/Button';
+import SelectField from '../../components/SelectField/SelectField';
+import UnknownAccordion from '../../components/UnknownAccordian/UnknownAccordian';
 
 const BreakerFinder = () => {
-  const { selectedFloor, selectedRoom, selectedType, selectedItem, handleFloorChange, handleRoomChange, handleTypeChange, handleItemChange, resetSelections } = useBreakerSelection();
+  const {
+    selectedFloor,
+    selectedRoom,
+    selectedType,
+    selectedItem,
+    handleFloorChange,
+    handleRoomChange,
+    handleTypeChange,
+    handleItemChange,
+    resetSelections,
+  } = useBreakerSelection();
 
-  const KNOWN_TYPES = ["outlets", "lights", "appliances"];
+  const KNOWN_TYPES = ['outlets', 'lights', 'appliances'];
 
   // Check if a floor has rooms or goes directly to types
   const hasRooms = (floor) => {
@@ -22,12 +32,18 @@ const BreakerFinder = () => {
     return !floorKeys.some((key) => KNOWN_TYPES.includes(key));
   };
 
-  const floors = Object.keys(homeData).filter((floor) => floor !== "Unknowns");
+  const floors = Object.keys(homeData).filter((floor) => floor !== 'Unknowns');
   const floorHasRooms = selectedFloor ? hasRooms(selectedFloor) : false;
   const rooms = selectedFloor && floorHasRooms ? Object.keys(homeData[selectedFloor]) : [];
 
   // Types: if no rooms, get from floor directly; otherwise from room
-  const types = selectedFloor ? (floorHasRooms && selectedRoom ? Object.keys(homeData[selectedFloor][selectedRoom]) : floorHasRooms ? [] : Object.keys(homeData[selectedFloor])) : [];
+  const types = selectedFloor
+    ? floorHasRooms && selectedRoom
+      ? Object.keys(homeData[selectedFloor][selectedRoom])
+      : floorHasRooms
+        ? []
+        : Object.keys(homeData[selectedFloor])
+    : [];
 
   // Items: handle both cases (with and without rooms)
   const items =
@@ -35,8 +51,8 @@ const BreakerFinder = () => {
       ? floorHasRooms && selectedRoom
         ? Object.keys(homeData[selectedFloor][selectedRoom][selectedType])
         : !floorHasRooms
-        ? Object.keys(homeData[selectedFloor][selectedType])
-        : []
+          ? Object.keys(homeData[selectedFloor][selectedType])
+          : []
       : [];
 
   // Breaker info: handle both cases
@@ -45,17 +61,17 @@ const BreakerFinder = () => {
       ? floorHasRooms && selectedRoom
         ? homeData[selectedFloor][selectedRoom][selectedType][selectedItem]
         : !floorHasRooms
-        ? homeData[selectedFloor][selectedType][selectedItem]
-        : null
+          ? homeData[selectedFloor][selectedType][selectedItem]
+          : null
       : null;
 
   const getTypeIcon = (type) => {
     switch (type) {
-      case "outlets":
+      case 'outlets':
         return <Power className="w-4 h-4" />;
-      case "lights":
+      case 'lights':
         return <Lightbulb className="w-4 h-4" />;
-      case "appliances":
+      case 'appliances':
         return <Zap className="w-4 h-4" />;
       default:
         return null;
@@ -73,9 +89,23 @@ const BreakerFinder = () => {
           </div>
 
           <div className="space-y-4">
-            <SelectField label="Select Area" value={selectedFloor} onChange={handleFloorChange} options={floors} placeholder="choose an area..." />
+            <SelectField
+              label="Select Area"
+              value={selectedFloor}
+              onChange={handleFloorChange}
+              options={floors}
+              placeholder="choose an area..."
+            />
 
-            {selectedFloor && floorHasRooms && <SelectField label="Select Room" value={selectedRoom} onChange={handleRoomChange} options={rooms} placeholder="Choose a room..." />}
+            {selectedFloor && floorHasRooms && (
+              <SelectField
+                label="Select Room"
+                value={selectedRoom}
+                onChange={handleRoomChange}
+                options={rooms}
+                placeholder="Choose a room..."
+              />
+            )}
 
             {selectedFloor && ((floorHasRooms && selectedRoom) || !floorHasRooms) && (
               <SelectField
@@ -88,7 +118,15 @@ const BreakerFinder = () => {
               />
             )}
 
-            {selectedType && <SelectField label="Select Item" value={selectedItem} onChange={handleItemChange} options={items} placeholder="Choose item..." />}
+            {selectedType && (
+              <SelectField
+                label="Select Item"
+                value={selectedItem}
+                onChange={handleItemChange}
+                options={items}
+                placeholder="Choose item..."
+              />
+            )}
           </div>
 
           {breakerInfo && (
@@ -107,7 +145,10 @@ const BreakerFinder = () => {
           )}
 
           {(selectedFloor || selectedRoom || selectedType || selectedItem) && (
-            <button onClick={resetSelections} className="w-full mt-4 px-4 py-2 bg-green-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+            <button
+              onClick={resetSelections}
+              className="w-full mt-4 px-4 py-2 bg-green-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            >
               Reset
             </button>
           )}
@@ -117,7 +158,10 @@ const BreakerFinder = () => {
 
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800">
           <p className="font-semibold mb-1">⚠️ Safety Reminder</p>
-          <p>Always turn off the main breaker before working on electrical systems or face the consequences.</p>
+          <p>
+            Always turn off the main breaker before working on electrical systems or face the
+            consequences.
+          </p>
         </div>
       </div>
     </div>

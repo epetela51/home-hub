@@ -1,11 +1,11 @@
-import { useMealPlan } from "./hooks/useMealPlan";
-import { useFetchMeals } from "./hooks/useFetchMeals";
+import { useMealPlan } from './hooks/useMealPlan';
+import { useFetchMeals } from './hooks/useFetchMeals';
 
-import Button from "../../components/Button/Button";
-import DailyMeal from "./DailyMeal";
-import NewMeals from "./NewMeals/NewMeals";
+import Button from '../../components/Button/Button';
+import DailyMeal from './DailyMeal';
+import NewMeals from './NewMeals/NewMeals';
 
-const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const Meals = () => {
   const { meals, weeklyPlan, isLoading } = useFetchMeals();
@@ -20,7 +20,10 @@ const Meals = () => {
       <section className="mt-20">
         <h2 className="text-2xl font-bold text-gray-900">Weekly Meal Plan</h2>
 
-        <button onClick={handleResetWeek} className="px-4 py-2 my-6 bg-red-500 text-white rounded hover:bg-red-600 transition">
+        <button
+          onClick={handleResetWeek}
+          className="px-4 py-2 my-6 bg-red-500 text-white rounded hover:bg-red-600 transition"
+        >
           Reset Week
         </button>
         {isLoading ? (
@@ -29,7 +32,13 @@ const Meals = () => {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {DAYS_OF_WEEK.map((day) => (
-                <DailyMeal key={day} day={day} mealId={mealPlan[day]} meals={meals} onMealChange={handlePlanChange} />
+                <DailyMeal
+                  key={day}
+                  day={day}
+                  mealId={mealPlan[day]}
+                  meals={meals}
+                  onMealChange={handlePlanChange}
+                />
               ))}
             </div>
             <div className="mt-8">

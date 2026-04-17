@@ -1,10 +1,10 @@
-import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements } from "react-router";
+import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements } from 'react-router';
 
-import Home from "./pages/Home/Home";
-import BreakerFinder from "./pages/BreakerFinder/BreakerFinder";
-import Meals from "./pages/Meals/Meals";
+import Home from './pages/Home/Home';
+import BreakerFinder from './pages/BreakerFinder/BreakerFinder';
+import Meals from './pages/Meals/Meals';
 
-import "./App.css";
+import './App.css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

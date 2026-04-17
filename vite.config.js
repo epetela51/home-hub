@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -8,8 +8,8 @@ export default defineConfig({
   server: {
     port: 8080,
     proxy: {
-      "/api": {
-        target: "http://192.168.4.195",
+      '/api': {
+        target: 'http://192.168.4.195',
         changeOrigin: true,
         secure: false,
       },

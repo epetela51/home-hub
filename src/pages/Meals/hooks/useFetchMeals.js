@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useFetchMeals = () => {
   const [meals, setMeals] = useState([]);
@@ -6,16 +6,16 @@ export const useFetchMeals = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/meals")
+    fetch('/api/meals')
       .then((res) => res.json())
       .then((data) => {
-        console.log("Meals from Flask:", data);
+        console.log('Meals from Flask:', data);
         setMeals(data.meals);
         setWeeklyPlan(data.weeklyPlan);
         setIsLoading(false);
       })
       .catch((err) => {
-        console.error("Error fetching meals:", err);
+        console.error('Error fetching meals:', err);
         setIsLoading(false);
       });
   }, []);

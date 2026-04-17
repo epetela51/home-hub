@@ -3,6 +3,7 @@ import { useFetchMeals } from "./hooks/useFetchMeals";
 
 import Button from "../../components/Button/Button";
 import DailyMeal from "./DailyMeal";
+import NewMeals from "./NewMeals/NewMeals";
 
 const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -25,11 +26,16 @@ const Meals = () => {
         {isLoading ? (
           <p className="text-2xl text-gray-600">Loading meal plan for the week...</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {DAYS_OF_WEEK.map((day) => (
-              <DailyMeal key={day} day={day} mealId={mealPlan[day]} meals={meals} onMealChange={handlePlanChange} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {DAYS_OF_WEEK.map((day) => (
+                <DailyMeal key={day} day={day} mealId={mealPlan[day]} meals={meals} onMealChange={handlePlanChange} />
+              ))}
+            </div>
+            <div className="mt-8">
+              <NewMeals />
+            </div>
+          </>
         )}
       </section>
     </div>

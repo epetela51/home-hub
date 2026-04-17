@@ -2,7 +2,7 @@ import { useMealPlan } from "./hooks/useMealPlan";
 import { useFetchMeals } from "./hooks/useFetchMeals";
 
 import Button from "../../components/Button/Button";
-import DailyMeal from "./DailyMeal/DailyMeal";
+import DailyMeal from "./DailyMeal";
 
 const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 

@@ -1,9 +1,9 @@
-import { useMealPlan } from './hooks/useMealPlan';
-import { useFetchMeals } from './hooks/useFetchMeals';
+import { useMealPlan } from '../hooks/useMealPlan';
+import { useFetchMeals } from '../hooks/useFetchMeals';
 
-import Button from '../../components/Button/Button';
-import DailyMeal from './DailyMeal';
-import NewMeals from './NewMeals/NewMeals';
+import Button from '../../../components/Button/Button';
+import DailyMeal from '../DailyMeal/DailyMeal';
+import NewMeals from '../NewMeals/NewMeals';
 
 const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 

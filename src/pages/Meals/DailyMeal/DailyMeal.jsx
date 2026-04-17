@@ -1,4 +1,4 @@
-import SelectField from '../../components/SelectField/SelectField';
+import SelectField from '../../../components/SelectField/SelectField';
 
 const DailyMeal = ({ day, mealId, meals, onMealChange }) => {
   const handleChange = (selectedMealId) => {

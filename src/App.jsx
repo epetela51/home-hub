@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements } 
 
 import Home from './pages/Home/Home';
 import BreakerFinder from './pages/BreakerFinder/BreakerFinder';
-import Meals from './pages/Meals/Meals';
+import Meals from './pages/Meals/Meals/Meals';
 
 import './App.css';
 

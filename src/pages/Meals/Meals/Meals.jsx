@@ -4,6 +4,7 @@ import { useFetchMeals } from '../hooks/useFetchMeals';
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
 import NewMeals from '../NewMeals/NewMeals';
+import EditMeals from '../EditMeals/EditMeals';
 
 const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -43,6 +44,9 @@ const Meals = () => {
             </div>
             <div className="mt-8">
               <NewMeals />
+            </div>
+            <div className="mt-8">
+              <EditMeals meals={meals} />
             </div>
           </>
         )}

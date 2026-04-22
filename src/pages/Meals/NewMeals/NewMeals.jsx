@@ -1,17 +1,18 @@
 import MealForm from '../MealForm/MealForm';
 
+import { useHandleAddMeal } from '../hooks/useHandleAddMeal';
+
 const NewMeals = () => {
-  const handleAddMeal = ({ title, note }) => {
-    console.log('Adding new meal:', { title, note });
-    // TODO: Send POST request to save meal when API is ready
-  };
+  const { handleAddMeal, isSuccessful, formResetKey } = useHandleAddMeal();
 
   return (
     <MealForm
+      key={formResetKey}
       title="Add New Meal"
-      submitButtonLabel="Add Meal"
+      submitButtonLabel={isSuccessful ? '✓ Added!' : 'Add Meal'}
       onSubmit={handleAddMeal}
       showCancelButton={false}
+      isSubmitSuccess={isSuccessful}
     />
   );
 };

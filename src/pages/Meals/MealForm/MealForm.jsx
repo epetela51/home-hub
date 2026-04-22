@@ -10,6 +10,7 @@ const MealForm = ({
   showCancelButton = false,
   onCancel,
   title = 'Meal Form',
+  isSubmitSuccess = false,
 }) => {
   const [mealTitle, setMealTitle] = useState(initialTitle);
   const [mealNote, setMealNote] = useState(initialNote);
@@ -48,7 +49,11 @@ const MealForm = ({
         <div className="flex gap-3 mt-6">
           <button
             onClick={handleSubmit}
-            className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+            className={`flex-1 px-4 py-2 text-white rounded transition ${
+              isSubmitSuccess
+                ? 'bg-green-500 hover:bg-green-600'
+                : 'bg-indigo-600 hover:bg-indigo-700'
+            }`}
           >
             {submitButtonLabel}
           </button>

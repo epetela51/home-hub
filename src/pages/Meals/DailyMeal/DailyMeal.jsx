@@ -1,9 +1,13 @@
 import SelectField from '../../../components/SelectField/SelectField';
+import { useSaveMealSelection } from '../hooks/useSaveMealSelection';
 
 const DailyMeal = ({ day, mealId, meals, onMealChange }) => {
+  const saveMeal = useSaveMealSelection();
+
   const handleChange = (selectedMealId) => {
     const mealIdValue = selectedMealId === '' ? null : Number(selectedMealId);
     onMealChange(day, mealIdValue);
+    saveMeal(day, mealIdValue);
   };
 
   // Find the selected meal to display next to the day

@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useMealPlan } from '../hooks/useMealPlan';
+import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
 import { useFetchMeals } from '../hooks/useFetchMeals';
 
 import Button from '../../../components/Button/Button';
@@ -12,9 +13,10 @@ const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 const Meals = () => {
   const { meals, setMeals, weeklyPlan, isLoading } = useFetchMeals();
 
-  const { mealPlan, handlePlanChange, handleResetWeek } = useMealPlan({
+  const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
+  const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
 
   // Memoize meals array so it only changes when content actually changes
   const memoizedMeals = useMemo(() => meals, [meals]);
@@ -26,6 +28,15 @@ const Meals = () => {
     [setMeals]
   );
 
+  const handleResetWeek = useCallback(async () => {
+    try {
+      await resetWeeklyPlan();
+      resetMealPlan();
+    } catch {
+      // Error already logged in useResetWeeklyPlan hook
+    }
+  }, [resetWeeklyPlan, resetMealPlan]);
+
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-8">
       <Button url="/" text="Go Home" />
@@ -34,9 +45,10 @@ const Meals = () => {
 
         <button
           onClick={handleResetWeek}
-          className="px-4 py-2 my-6 bg-red-500 text-white rounded hover:bg-red-600 transition"
+          disabled={isResetting}
+          className="px-4 py-2 my-6 bg-red-500 text-white rounded hover:bg-red-600 transition disabled:bg-red-300 disabled:cursor-not-allowed"
         >
-          Reset Week
+          {isResetting ? 'Resetting...' : 'Reset Week'}
         </button>
         {isLoading ? (
           <p className="text-2xl text-gray-600">Loading meal plan for the week...</p>

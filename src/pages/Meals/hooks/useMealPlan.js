@@ -13,14 +13,9 @@ export const useMealPlan = ({ initialMealPlan = {} }) => {
     }));
   }, []);
 
-  const handleResetWeek = useCallback(() => {
-    // Set all days to null to override initialMealPlan
-    const resetValues = Object.keys(initialMealPlan).reduce((acc, day) => {
-      acc[day] = null;
-      return acc;
-    }, {});
-    setmealChange(resetValues);
-  }, [initialMealPlan]);
+  const resetMealPlan = useCallback(() => {
+    setmealChange({});
+  }, []);
 
-  return { mealPlan, handlePlanChange, handleResetWeek };
+  return { mealPlan, handlePlanChange, resetMealPlan };
 };

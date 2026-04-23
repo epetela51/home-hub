@@ -9,7 +9,7 @@ import EditMeals from '../EditMeals/EditMeals';
 const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const Meals = () => {
-  const { meals, weeklyPlan, isLoading } = useFetchMeals();
+  const { meals, weeklyPlan, isLoading, refetch } = useFetchMeals();
 
   const { mealPlan, handlePlanChange, handleResetWeek } = useMealPlan({
     initialMealPlan: weeklyPlan,
@@ -43,7 +43,7 @@ const Meals = () => {
               ))}
             </div>
             <div className="mt-8">
-              <NewMeals />
+              <NewMeals refetch={refetch} />
             </div>
             <div className="mt-8">
               <EditMeals meals={meals} />

@@ -29,7 +29,8 @@ export const useAddMeal = () => {
       }
 
       const data = await res.json();
-      return data;
+
+      return data?.meal;
     } catch (err) {
       console.error('Error adding meal:', err);
       throw err;

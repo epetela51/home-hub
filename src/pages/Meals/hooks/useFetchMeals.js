@@ -2,9 +2,9 @@ import { useEffect, useState, useCallback } from 'react';
 
 /**
  * Custom hook to fetch meals data from the API.
- * Manages state and fetching on mount, returns meals data and a refetch function.
+ * Manages state and fetching on mount.
  *
- * @returns {Object} Object containing { meals, weeklyPlan, isLoading, refetch }
+ * @returns {Object} Object containing { meals, setMeals, weeklyPlan, isLoading }
  */
 export const useFetchMeals = () => {
   const [meals, setMeals] = useState([]);
@@ -32,5 +32,5 @@ export const useFetchMeals = () => {
     fetchMealsData();
   }, [fetchMealsData]);
 
-  return { meals, weeklyPlan, isLoading, refetch: fetchMealsData };
+  return { meals, setMeals, weeklyPlan, isLoading };
 };

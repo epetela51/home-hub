@@ -4,23 +4,27 @@ import { useAddMeal } from './useAddMeal';
 /**
  * Custom hook to handle the add meal form submission flow.
  * Manages form reset, success state, and button feedback.
- * Triggers refetch of meals after successful add to update dropdowns.
+ * Calls onMealAdded callback with the newly created meal to update parent state.
  *
- * @param {Function} refetch - Function to refetch meals list from API
+ * @param {Function} onMealAdded - Callback that receives the new meal object with ID
  * @returns {Object} Object containing { handleAddMeal, isSuccessful, formResetKey }
  */
-export const useHandleAddMeal = (refetch) => {
+export const useHandleAddMeal = (onMealAdded) => {
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [formResetKey, setFormResetKey] = useState(0);
   const addMeal = useAddMeal();
 
   const handleAddMeal = async ({ title, note }) => {
     try {
-      await addMeal({ meal: title, note });
+      // POST the new meal and capture the response with the meal ID
+      const newMeal = await addMeal({ meal: title, note });
 
-      // Refetch meals to show new meal in dropdowns
-      if (refetch) {
-        refetch();
+      /**
+       * Add the new meal to parent state (dropdown options updated silently)
+       * This allows a new meal to be added to the drop down without needing to make another refetch API call
+       */
+      if (onMealAdded) {
+        onMealAdded(newMeal);
       }
 
       // Show success state on button for 2 seconds

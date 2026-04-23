@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const SelectField = ({ value, onChange, options }) => {
   const handleChange = (e) => {
     onChange(e.target.value);
@@ -21,4 +23,4 @@ const SelectField = ({ value, onChange, options }) => {
   );
 };
 
-export default SelectField;
+export default memo(SelectField);

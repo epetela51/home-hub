@@ -1,14 +1,19 @@
-import SelectField from '../../../components/SelectField/SelectField';
+import { useCallback } from 'react';
 import { useSaveMealSelection } from '../hooks/useSaveMealSelection';
+
+import SelectField from '../../../components/SelectField/SelectField';
 
 const DailyMeal = ({ day, mealId, meals, onMealChange }) => {
   const saveMeal = useSaveMealSelection();
 
-  const handleChange = (selectedMealId) => {
-    const mealIdValue = selectedMealId === '' ? null : Number(selectedMealId);
-    onMealChange(day, mealIdValue);
-    saveMeal(day, mealIdValue);
-  };
+  const handleChange = useCallback(
+    (selectedMealId) => {
+      const mealIdValue = selectedMealId === '' ? null : Number(selectedMealId);
+      onMealChange(day, mealIdValue);
+      saveMeal(day, mealIdValue);
+    },
+    [day, onMealChange, saveMeal]
+  );
 
   // Find the selected meal to display next to the day
   const selectedMeal = meals.find((meal) => meal.id === mealId);

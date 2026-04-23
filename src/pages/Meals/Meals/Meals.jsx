@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { useMealPlan } from '../hooks/useMealPlan';
 import { useFetchMeals } from '../hooks/useFetchMeals';
 
@@ -9,11 +10,21 @@ import EditMeals from '../EditMeals/EditMeals';
 const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const Meals = () => {
-  const { meals, weeklyPlan, isLoading, refetch } = useFetchMeals();
+  const { meals, setMeals, weeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, handlePlanChange, handleResetWeek } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
+
+  // Memoize meals array so it only changes when content actually changes
+  const memoizedMeals = useMemo(() => meals, [meals]);
+
+  const handleMealAdded = useCallback(
+    (newMeal) => {
+      setMeals((prevMeals) => [...prevMeals, newMeal]);
+    },
+    [setMeals]
+  );
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-8">
@@ -37,13 +48,13 @@ const Meals = () => {
                   key={day}
                   day={day}
                   mealId={mealPlan[day]}
-                  meals={meals}
+                  meals={memoizedMeals}
                   onMealChange={handlePlanChange}
                 />
               ))}
             </div>
             <div className="mt-8">
-              <NewMeals refetch={refetch} />
+              <NewMeals onMealAdded={handleMealAdded} />
             </div>
             <div className="mt-8">
               <EditMeals meals={meals} />

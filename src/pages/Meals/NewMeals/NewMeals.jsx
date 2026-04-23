@@ -2,8 +2,8 @@ import MealForm from '../MealForm/MealForm';
 
 import { useHandleAddMeal } from '../hooks/useHandleAddMeal';
 
-const NewMeals = ({ refetch }) => {
-  const { handleAddMeal, isSuccessful, formResetKey } = useHandleAddMeal(refetch);
+const NewMeals = ({ onMealAdded }) => {
+  const { handleAddMeal, isSuccessful, formResetKey } = useHandleAddMeal(onMealAdded);
 
   return (
     <MealForm

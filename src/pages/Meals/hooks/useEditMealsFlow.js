@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useHandleDeleteMeal } from './useHandleDeleteMeal';
 
-const useEditMealsFlow = (meals = []) => {
+const useEditMealsFlow = (meals = [], onMealDeleted) => {
   const [mode, setMode] = useState('select'); // 'select' or 'edit'
   const [selectedMealId, setSelectedMealId] = useState(null);
   const [selectedMeal, setSelectedMeal] = useState(null);
+  const handleDeleteMeal = useHandleDeleteMeal(onMealDeleted);
 
   const handleMealSelect = (mealIdStr) => {
     const mealId = mealIdStr ? Number(mealIdStr) : null;
@@ -18,10 +20,14 @@ const useEditMealsFlow = (meals = []) => {
     setMode('edit');
   };
 
-  const handleDeleteClick = () => {
-    console.log(`Deleting meal ID ${selectedMealId}: ${selectedMeal.meal}`);
-    // TODO: Add API call to delete meal when ready
-    // For now, just log to console
+  const handleDeleteClick = async () => {
+    if (selectedMealId) {
+      await handleDeleteMeal(selectedMealId);
+      // Reset UI back to select mode and clear selection
+      setMode('select');
+      setSelectedMealId(null);
+      setSelectedMeal(null);
+    }
   };
 
   const handleBackClick = () => {

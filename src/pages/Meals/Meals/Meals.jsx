@@ -28,6 +28,14 @@ const Meals = () => {
     [setMeals]
   );
 
+  const handleMealDeleted = useCallback(
+    (deletedMealId) => {
+      // Filter out the deleted meal from the meals array
+      setMeals((prevMeals) => prevMeals.filter((meal) => meal.id !== deletedMealId));
+    },
+    [setMeals]
+  );
+
   const handleResetWeek = useCallback(async () => {
     try {
       await resetWeeklyPlan();
@@ -69,7 +77,7 @@ const Meals = () => {
               <NewMeals onMealAdded={handleMealAdded} />
             </div>
             <div className="mt-8">
-              <EditMeals meals={meals} />
+              <EditMeals meals={meals} onMealDeleted={handleMealDeleted} />
             </div>
           </>
         )}

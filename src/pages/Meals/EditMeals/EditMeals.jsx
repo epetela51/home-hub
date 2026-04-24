@@ -3,7 +3,7 @@ import MealForm from '../MealForm/MealForm';
 import MealOptions from '../MealOptions/MealOptions';
 import useEditMealsFlow from '../hooks/useEditMealsFlow';
 
-const EditMeals = ({ meals = [], onMealDeleted }) => {
+const EditMeals = ({ meals = [], onMealDeleted, onMealEdited }) => {
   const {
     mode,
     selectedMeal,
@@ -14,7 +14,7 @@ const EditMeals = ({ meals = [], onMealDeleted }) => {
     handleBackClick,
     handleSaveMeal,
     handleCancelEdit,
-  } = useEditMealsFlow(meals, onMealDeleted);
+  } = useEditMealsFlow(meals, onMealDeleted, onMealEdited);
 
   // Dropdown to choose meal
   if (mode === 'select' && !selectedMeal) {

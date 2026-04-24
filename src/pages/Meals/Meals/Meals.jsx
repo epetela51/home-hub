@@ -1,7 +1,8 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useMealPlan } from '../hooks/useMealPlan';
 import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
 import { useFetchMeals } from '../hooks/useFetchMeals';
+import { useMealActions } from '../hooks/useMealActions';
 
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
@@ -16,34 +17,17 @@ const Meals = () => {
   const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
+
   const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
+
+  const { handleMealAdded, handleMealDeleted, handleMealEdited, handleResetWeek } = useMealActions(
+    setMeals,
+    resetWeeklyPlan,
+    resetMealPlan
+  );
 
   // Memoize meals array so it only changes when content actually changes
   const memoizedMeals = useMemo(() => meals, [meals]);
-
-  const handleMealAdded = useCallback(
-    (newMeal) => {
-      setMeals((prevMeals) => [...prevMeals, newMeal]);
-    },
-    [setMeals]
-  );
-
-  const handleMealDeleted = useCallback(
-    (deletedMealId) => {
-      // Filter out the deleted meal from the meals array
-      setMeals((prevMeals) => prevMeals.filter((meal) => meal.id !== deletedMealId));
-    },
-    [setMeals]
-  );
-
-  const handleResetWeek = useCallback(async () => {
-    try {
-      await resetWeeklyPlan();
-      resetMealPlan();
-    } catch {
-      // Error already logged in useResetWeeklyPlan hook
-    }
-  }, [resetWeeklyPlan, resetMealPlan]);
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-8">
@@ -77,7 +61,11 @@ const Meals = () => {
               <NewMeals onMealAdded={handleMealAdded} />
             </div>
             <div className="mt-8">
-              <EditMeals meals={meals} onMealDeleted={handleMealDeleted} />
+              <EditMeals
+                meals={meals}
+                onMealDeleted={handleMealDeleted}
+                onMealEdited={handleMealEdited}
+              />
             </div>
           </>
         )}

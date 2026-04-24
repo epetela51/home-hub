@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useHandleDeleteMeal } from './useHandleDeleteMeal';
+import { useHandleEditMeal } from './useHandleEditMeal';
 
-const useEditMealsFlow = (meals = [], onMealDeleted) => {
+const useEditMealsFlow = (meals = [], onMealDeleted, onMealEdited) => {
   const [mode, setMode] = useState('select'); // 'select' or 'edit'
   const [selectedMealId, setSelectedMealId] = useState(null);
   const [selectedMeal, setSelectedMeal] = useState(null);
   const handleDeleteMeal = useHandleDeleteMeal(onMealDeleted);
+  const handleEditMeal = useHandleEditMeal(onMealEdited);
 
   const handleMealSelect = (mealIdStr) => {
     const mealId = mealIdStr ? Number(mealIdStr) : null;
@@ -35,10 +37,17 @@ const useEditMealsFlow = (meals = [], onMealDeleted) => {
     setSelectedMeal(null);
   };
 
-  const handleSaveMeal = ({ title, note }) => {
-    console.log(`Saving meal: { id: ${selectedMealId}, title: "${title}", note: "${note}" }`);
-    // TODO: Add API call to save meal when ready
-    // For now, just log to console
+  const handleSaveMeal = async ({ title, note }) => {
+    if (selectedMealId) {
+      await handleEditMeal(selectedMealId, selectedMeal, {
+        meal: title,
+        note,
+      });
+      // Reset UI back to select mode and clear selection
+      setMode('select');
+      setSelectedMealId(null);
+      setSelectedMeal(null);
+    }
   };
 
   const handleCancelEdit = () => {

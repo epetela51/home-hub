@@ -1,27 +1,27 @@
 import { useState } from 'react';
 
 export const useBreakerSelection = () => {
-  const [selectedFloor, setSelectedFloor] = useState("");
-  const [selectedRoom, setSelectedRoom] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedFloor, setSelectedFloor] = useState('');
+  const [selectedRoom, setSelectedRoom] = useState('');
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedItem, setSelectedItem] = useState('');
 
   const handleFloorChange = (value) => {
     setSelectedFloor(value);
-    setSelectedRoom("");
-    setSelectedType("");
-    setSelectedItem("");
+    setSelectedRoom('');
+    setSelectedType('');
+    setSelectedItem('');
   };
 
   const handleRoomChange = (value) => {
     setSelectedRoom(value);
-    setSelectedType("");
-    setSelectedItem("");
+    setSelectedType('');
+    setSelectedItem('');
   };
 
   const handleTypeChange = (value) => {
     setSelectedType(value);
-    setSelectedItem("");
+    setSelectedItem('');
   };
 
   const handleItemChange = (value) => {
@@ -29,10 +29,10 @@ export const useBreakerSelection = () => {
   };
 
   const resetSelections = () => {
-    setSelectedFloor("");
-    setSelectedRoom("");
-    setSelectedType("");
-    setSelectedItem("");
+    setSelectedFloor('');
+    setSelectedRoom('');
+    setSelectedType('');
+    setSelectedItem('');
   };
 
   return {
@@ -47,4 +47,3 @@ export const useBreakerSelection = () => {
     resetSelections,
   };
 };
-

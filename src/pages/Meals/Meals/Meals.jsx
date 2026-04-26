@@ -3,6 +3,7 @@ import { useMealPlan } from '../hooks/useMealPlan';
 import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
 import { useFetchMeals } from '../hooks/useFetchMeals';
 import { useMealActions } from '../hooks/useMealActions';
+import { getWeekDates } from '../../../utils/getWeekDates';
 
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
@@ -14,7 +15,7 @@ const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 const Meals = () => {
   const { meals, setMeals, weeklyPlan, isLoading } = useFetchMeals();
 
-  const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
+  const { mealPlan, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
 
@@ -29,8 +30,11 @@ const Meals = () => {
   // Memoize meals array so it only changes when content actually changes
   const memoizedMeals = useMemo(() => meals, [meals]);
 
+  // Get dates for the current week
+  const weekDates = useMemo(() => getWeekDates(), []);
+
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-8">
+    <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-8">
       <Button url="/" text="Go Home" />
       <section className="mt-20">
         <h2 className="text-2xl font-bold text-gray-900">Weekly Meal Plan</h2>
@@ -51,9 +55,9 @@ const Meals = () => {
                 <DailyMeal
                   key={day}
                   day={day}
+                  date={weekDates[day]}
                   mealId={mealPlan[day]}
                   meals={memoizedMeals}
-                  onMealChange={handlePlanChange}
                 />
               ))}
             </div>

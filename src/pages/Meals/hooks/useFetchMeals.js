@@ -14,7 +14,7 @@ export const useFetchMeals = () => {
   const fetchMealsData = useCallback(async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('/api/meals');
+      const res = await fetch('/api/v2/meals');
       if (!res.ok) {
         throw new Error(`API error: ${res.status}`);
       }

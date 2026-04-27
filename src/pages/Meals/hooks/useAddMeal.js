@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 /**
  * Custom hook to add a new meal via API.
- * Returns a handler function that makes a POST /api/meals call.
+ * Returns a handler function that makes a POST /api/v2/meals call.
  *
  * @returns {Function} Handler function that takes {meal, note} and adds the meal
  */
@@ -16,7 +16,7 @@ export const useAddMeal = () => {
     };
 
     try {
-      const res = await fetch('/api/meals', {
+      const res = await fetch('/api/v2/meals', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

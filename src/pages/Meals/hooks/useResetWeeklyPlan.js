@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 /**
  * Custom hook to reset the weekly meal plan via API.
- * Makes a DELETE request to /api/weekly-plan to clear all meals for the week.
+ * Makes a DELETE request to /api/v2/weekly-plan to clear all meals for the week.
  *
  * @returns {Object} Object with resetWeeklyPlan function and isResetting state
  */
@@ -12,7 +12,7 @@ export const useResetWeeklyPlan = () => {
   const resetWeeklyPlan = useCallback(async () => {
     setIsResetting(true);
     try {
-      const res = await fetch('/api/weekly-plan', {
+      const res = await fetch('/api/v2/weekly-plan', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

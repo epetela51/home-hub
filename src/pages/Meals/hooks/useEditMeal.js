@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 /**
  * Custom hook to edit an existing meal via API.
- * Returns a handler function that makes a PUT /api/meals/<meal-id> call.
+ * Returns a handler function that makes a PUT /api/v2/meals/<meal-id> call.
  *
  * @returns {Function} Handler function that takes { mealId, meal, note } and edits the meal
  */
@@ -16,7 +16,7 @@ export const useEditMeal = () => {
     };
 
     try {
-      const res = await fetch(`/api/meals/${mealId}`, {
+      const res = await fetch(`/api/v2/meals/${mealId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

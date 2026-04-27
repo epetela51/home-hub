@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 /**
  * Custom hook to save meal selection via API.
- * Returns a handler function that makes a PUT /api/daily-meal call when invoked.
+ * Returns a handler function that makes a PUT /api/v2/daily-meal call when invoked.
  *
  * @returns {Function} Handler function that takes (day, mealId) and saves the selection
  */
@@ -13,7 +13,7 @@ export const useSaveMealSelection = () => {
       meal_id: mealId,
     };
 
-    fetch('/api/daily-meal', {
+    fetch('/api/v2/daily-meal', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

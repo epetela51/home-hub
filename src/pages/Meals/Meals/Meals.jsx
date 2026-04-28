@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useMealPlan } from '../hooks/useMealPlan';
 import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
 import { useFetchMeals } from '../hooks/useFetchMeals';
@@ -9,10 +9,12 @@ import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
 import NewMeals from '../NewMeals/NewMeals';
 import EditMeals from '../EditMeals/EditMeals';
+import WeekNavigation from '../WeekNavigation/WeekNavigation';
 
 const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const Meals = () => {
+  const [weekOffset, setWeekOffset] = useState(0);
   const { meals, setMeals, weeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, resetMealPlan } = useMealPlan({
@@ -30,14 +32,18 @@ const Meals = () => {
   // Memoize meals array so it only changes when content actually changes
   const memoizedMeals = useMemo(() => meals, [meals]);
 
-  // Get dates for the current week
-  const weekDates = useMemo(() => getWeekDates(), []);
+  // Get dates for the selected week
+  const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
 
   return (
     <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-8">
       <Button url="/" text="Go Home" />
       <section className="mt-20">
-        <h2 className="text-2xl font-bold text-gray-900">Weekly Meal Plan</h2>
+        <WeekNavigation
+          weekOffset={weekOffset}
+          setWeekOffset={setWeekOffset}
+          weekDates={weekDates}
+        />
 
         <button
           onClick={handleResetWeek}

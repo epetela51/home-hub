@@ -9,7 +9,7 @@ const DailyMeal = ({ day, date, mealId, meals }) => {
   return (
     <div className="flex gap-4 p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
       {/* Left Column: Day and Date Box */}
-      <div className="w-20 flex flex-col items-center justify-center bg-gray-50 border border-gray-300 rounded-lg py-3">
+      <div className="w-14 flex flex-col items-center justify-center bg-gray-50 border border-gray-300 rounded-lg py-1">
         <div className="text-sm font-bold text-gray-700">{formattedDate.day}</div>
         <div className="text-xl font-semibold text-gray-900">{formattedDate.date}</div>
       </div>

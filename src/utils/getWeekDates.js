@@ -13,10 +13,18 @@ const getMondayOfWeek = (date = new Date()) => {
 /**
  * Get all dates for the week (Monday-Sunday)
  * @param {Date} startDate - optional date to calculate from (defaults to today)
+ * @param {number} weekOffset - number of weeks to offset (e.g., -1 for last week, 1 for next week, 0 for current)
  * @returns {Object} object mapping day names to Date objects
  */
-export const getWeekDates = (startDate = new Date()) => {
-  const monday = getMondayOfWeek(startDate);
+export const getWeekDates = (startDate = new Date(), weekOffset = 0) => {
+  let monday = getMondayOfWeek(startDate);
+
+  // Apply week offset
+  if (weekOffset !== 0) {
+    monday = new Date(monday);
+    monday.setDate(monday.getDate() + weekOffset * 7);
+  }
+
   const dates = {};
   const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -43,4 +51,42 @@ export const formatDayAndDate = (date) => {
     day: dayAbbrev,
     date: dayOfMonth,
   };
+};
+
+/**
+ * Get week label based on week offset
+ * @param {number} weekOffset - offset from current week (-1, 0, 1, etc.)
+ * @returns {string} label for the week
+ */
+export const getWeekLabel = (weekOffset) => {
+  switch (weekOffset) {
+    case 0:
+      return 'This Week';
+    case -1:
+      return 'Previous Week';
+    case 1:
+      return 'Next Week';
+    default:
+      return `Week ${weekOffset > 0 ? '+' : ''}${weekOffset}`;
+  }
+};
+
+/**
+ * Format date range for display in the week navigation header
+ * @param {Object} weekDates - object with Monday and Sunday Date objects
+ * @returns {string} formatted date range (e.g., "Apr 21-27" or "Mar 31 - Apr 2")
+ */
+export const getFormattedDateRange = (weekDates) => {
+  const monday = weekDates.Monday;
+  const sunday = weekDates.Sunday;
+  const mondayMonth = monday?.toLocaleDateString('en-US', { month: 'short' });
+  const sundayMonth = sunday?.toLocaleDateString('en-US', { month: 'short' });
+  const startDay = monday?.getDate();
+  const endDay = sunday?.getDate();
+
+  if (mondayMonth === sundayMonth) {
+    return `${mondayMonth} ${startDay}-${endDay}`;
+  } else {
+    return `${mondayMonth} ${startDay} - ${sundayMonth} ${endDay}`;
+  }
 };

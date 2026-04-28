@@ -7,9 +7,9 @@ import { useCallback } from 'react';
  * @returns {Function} Handler function that takes (day, mealId) and saves the selection
  */
 export const useSaveMealSelection = () => {
-  const saveMeal = useCallback((day, mealId) => {
+  const saveMeal = useCallback((date, mealId) => {
     const payload = {
-      day,
+      date,
       meal_id: mealId,
     };
 
@@ -26,7 +26,7 @@ export const useSaveMealSelection = () => {
         }
       })
       .catch((err) => {
-        console.error(`Error saving meal for ${day}:`, err);
+        console.error(`Error saving meal for ${date}:`, err);
       });
   }, []);
 

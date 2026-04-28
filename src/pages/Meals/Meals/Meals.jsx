@@ -3,7 +3,7 @@ import { useMealPlan } from '../hooks/useMealPlan';
 import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
 import { useFetchMeals } from '../hooks/useFetchMeals';
 import { useMealActions } from '../hooks/useMealActions';
-import { getWeekDates } from '../../../utils/getWeekDates';
+import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
@@ -57,15 +57,17 @@ const Meals = () => {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {DAYS_OF_WEEK.map((day) => (
-                <DailyMeal
-                  key={day}
-                  day={day}
-                  date={weekDates[day]}
-                  mealId={mealPlan[day]}
-                  meals={memoizedMeals}
-                />
-              ))}
+              {DAYS_OF_WEEK.map((day) => {
+                const dateString = formatDateToString(weekDates[day]);
+                return (
+                  <DailyMeal
+                    key={day}
+                    dateString={dateString}
+                    mealId={mealPlan[dateString]}
+                    meals={memoizedMeals}
+                  />
+                );
+              })}
             </div>
             <div className="mt-8">
               <NewMeals onMealAdded={handleMealAdded} />

@@ -1,4 +1,16 @@
 /**
+ * Parse a date string (YYYY-MM-DD) as a local date, not UTC
+ * CRITICAL: new Date('YYYY-MM-DD') parses as UTC, causing timezone offset issues.
+ * This function ensures dates are parsed in the user's local timezone.
+ * @param {string} dateString - date string in format YYYY-MM-DD
+ * @returns {Date} Date object in local timezone
+ */
+export const parseLocalDate = (dateString) => {
+  const [year, month, day] = dateString.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
+/**
  * Get the Monday of the current week
  * @param {Date} date - optional date to calculate from (defaults to today)
  * @returns {Date} Monday of the week
@@ -6,8 +18,10 @@
 const getMondayOfWeek = (date = new Date()) => {
   const d = new Date(date);
   const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is Sunday
-  return new Date(d.setDate(diff));
+  // Calculate days to go back to Monday: Sunday (0)→-6, Mon (1)→0, Tue (2)→-1, etc.
+  const daysToGoBack = day === 0 ? 6 : day - 1;
+  d.setDate(d.getDate() - daysToGoBack);
+  return d;
 };
 
 /**

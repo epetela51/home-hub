@@ -1,4 +1,4 @@
-import { formatDayAndDate } from '../../../utils/getWeekDates';
+import { formatDayAndDate, parseLocalDate } from '../../../utils/getWeekDates';
 import { useMealPickerSheet } from '../hooks/useMealPickerSheet';
 import { useMealSearch } from '../hooks/useMealSearch';
 import { useSaveMealSelection } from '../hooks/useSaveMealSelection';
@@ -12,8 +12,8 @@ const DailyMeal = ({ dateString, mealId, meals }) => {
 
   const selectedMeal = meals.find((meal) => meal.id === mealId);
 
-  // Parse dateString (YYYY-MM-DD) to Date object for formatting
-  const date = new Date(dateString);
+  // Parse as local date to avoid timezone offset (parseLocalDate handles YYYY-MM-DD correctly)
+  const date = parseLocalDate(dateString);
   const formattedDate = formatDayAndDate(date);
 
   const handleSelectMeal = (selectedMealId) => {

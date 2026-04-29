@@ -8,7 +8,7 @@ const NewMeals = ({ onMealAdded }) => {
   return (
     <MealForm
       key={formResetKey}
-      title="Add New Meal"
+      title=""
       submitButtonLabel={isSuccessful ? '✓ Added!' : 'Add Meal'}
       onSubmit={handleAddMeal}
       showCancelButton={false}

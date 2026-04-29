@@ -7,7 +7,6 @@ import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
-import NewMeals from '../NewMeals/NewMeals';
 import EditMeals from '../EditMeals/EditMeals';
 import WeekNavigation from '../WeekNavigation/WeekNavigation';
 
@@ -23,7 +22,7 @@ const Meals = () => {
 
   const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
 
-  const { handleMealAdded, handleMealDeleted, handleMealEdited, handleResetWeek } = useMealActions(
+  const { handleMealDeleted, handleMealEdited, handleResetWeek } = useMealActions(
     setMeals,
     resetWeeklyPlan,
     resetMealPlan
@@ -71,9 +70,6 @@ const Meals = () => {
                   />
                 );
               })}
-            </div>
-            <div className="mt-8">
-              <NewMeals onMealAdded={handleMealAdded} />
             </div>
             <div className="mt-8">
               <EditMeals

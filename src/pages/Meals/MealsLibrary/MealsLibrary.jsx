@@ -1,18 +1,23 @@
 import { useFetchMeals } from '../hooks/useFetchMeals';
 import { useMealSearch } from '../hooks/useMealSearch';
+import { useMealsLibraryForm } from '../hooks/useMealsLibraryForm';
 
 import TextInput from '../../../components/TextInput/TextInput';
 import Button from '../../../components/Button/Button';
 import MealList from '../MealPickerSheet/MealList';
+import NewMeals from '../NewMeals/NewMeals';
 
 /**
  * MealsLibrary - Full-page view for browsing all meals with search functionality.
  * Allows users to view and search the complete meals library independently
  * from the weekly meal planner.
+ *
+ * Now includes a dynamic collapsible form to add new meals without leaving the page.
  */
 const MealsLibrary = () => {
-  const { meals, isLoading } = useFetchMeals();
+  const { meals, setMeals, isLoading } = useFetchMeals();
   const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
+  const { isFormOpen, handleToggleForm, handleMealAdded } = useMealsLibraryForm(setMeals);
 
   const displayedMeals = filteredMeals(meals);
 
@@ -34,6 +39,19 @@ const MealsLibrary = () => {
         <div className="mb-6">
           <TextInput value={searchQuery} onChange={setSearchQuery} placeholder="Search meals..." />
         </div>
+
+        <button
+          onClick={handleToggleForm}
+          className="mb-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
+        >
+          {isFormOpen ? '✕ Cancel' : '+ Add New Meal'}
+        </button>
+
+        {isFormOpen && (
+          <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <NewMeals onMealAdded={handleMealAdded} />
+          </div>
+        )}
 
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <MealList meals={displayedMeals} />

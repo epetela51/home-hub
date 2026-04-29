@@ -1,6 +1,6 @@
 import TextInput from '../../../components/TextInput/TextInput';
 import CloseButton from '../../../components/CloseButton/CloseButton';
-import MealListItem from './MealListItem';
+import MealList from './MealList';
 
 /**
  * MealPickerSheet - Bottom sheet component for selecting meals.
@@ -21,20 +21,6 @@ const MealPickerSheet = ({
   onSearchChange,
   onSelectMeal,
 }) => {
-  const renderMealList = () => {
-    if (filteredMeals.length > 0) {
-      return filteredMeals.map((meal) => (
-        <MealListItem key={meal.id} meal={meal} onClick={() => onSelectMeal(meal.id)} />
-      ));
-    }
-
-    return (
-      <div className="flex items-center justify-center py-8 text-center">
-        <p className="text-gray-500">No meals found</p>
-      </div>
-    );
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -61,7 +47,9 @@ const MealPickerSheet = ({
         </div>
 
         {/* Meal List */}
-        <div className="overflow-y-auto flex-1">{renderMealList()}</div>
+        <div className="overflow-y-auto flex-1">
+          <MealList meals={filteredMeals} onSelectMeal={onSelectMeal} />
+        </div>
       </div>
     </>
   );

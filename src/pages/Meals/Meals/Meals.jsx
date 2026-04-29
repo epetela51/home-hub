@@ -37,7 +37,10 @@ const Meals = () => {
 
   return (
     <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-8">
-      <Button url="/" text="Go Home" />
+      <div className="flex flex-col gap-4 w-fit mx-auto">
+        <Button url="/" text="Go Home" />
+        <Button url="/meals/library" text="Meals Library" />
+      </div>
       <section className="mt-20">
         <WeekNavigation
           weekOffset={weekOffset}

@@ -16,7 +16,7 @@ const Meals = () => {
   const [weekOffset, setWeekOffset] = useState(0);
   const { meals, setMeals, weeklyPlan, isLoading } = useFetchMeals();
 
-  const { mealPlan, resetMealPlan } = useMealPlan({
+  const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
 
@@ -67,6 +67,7 @@ const Meals = () => {
                     dateString={dateString}
                     mealId={mealPlan[dateString]}
                     meals={memoizedMeals}
+                    onMealSelected={handlePlanChange}
                   />
                 );
               })}

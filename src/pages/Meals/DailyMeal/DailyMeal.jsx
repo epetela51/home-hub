@@ -5,7 +5,7 @@ import { useSaveMealSelection } from '../hooks/useSaveMealSelection';
 
 import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
 
-const DailyMeal = ({ dateString, mealId, meals }) => {
+const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
   const { isOpen, openSheet, closeSheet } = useMealPickerSheet();
   const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
   const saveMeal = useSaveMealSelection();
@@ -17,6 +17,7 @@ const DailyMeal = ({ dateString, mealId, meals }) => {
   const formattedDate = formatDayAndDate(date);
 
   const handleSelectMeal = (selectedMealId) => {
+    onMealSelected(dateString, selectedMealId);
     saveMeal(dateString, selectedMealId);
     closeSheet();
     setSearchQuery('');

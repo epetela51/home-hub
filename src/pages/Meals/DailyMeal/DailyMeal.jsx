@@ -23,6 +23,13 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
     setSearchQuery('');
   };
 
+  const handleClearMeal = () => {
+    onMealSelected(dateString, null);
+    saveMeal(dateString, null, mealId);
+    closeSheet();
+    setSearchQuery('');
+  };
+
   return (
     <>
       <div
@@ -53,6 +60,8 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onSelectMeal={handleSelectMeal}
+        currentMeal={selectedMeal}
+        onClearMeal={handleClearMeal}
       />
     </>
   );

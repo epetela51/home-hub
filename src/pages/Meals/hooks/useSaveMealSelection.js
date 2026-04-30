@@ -1,15 +1,14 @@
-import { useCallback } from 'react';
-
 /**
- * Custom hook to save meal selection via API.
- * Returns a handler function that makes a PUT /api/v2/daily-meal call when invoked.
+ * Custom hook to save meal selection via API with optimistic update rollback.
+ * Accepts callback to revert state if API fails.
  *
- * @returns {Function} Handler function that takes (day, mealId) and saves the selection
+ * @param {Function} onMealSaved - Callback to revert meal selection on API failure: (dateString, mealId) => void
+ * @returns {Function} Handler function that takes (dateString, mealId, previousMealId) and saves the selection
  */
-export const useSaveMealSelection = () => {
-  const saveMeal = useCallback((date, mealId) => {
+export const useSaveMealSelection = (onMealSaved) => {
+  const saveMeal = (dateString, mealId, previousMealId) => {
     const payload = {
-      date,
+      date: dateString,
       meal_id: mealId,
     };
 
@@ -26,9 +25,14 @@ export const useSaveMealSelection = () => {
         }
       })
       .catch((err) => {
-        console.error(`Error saving meal for ${date}:`, err);
+        console.error(`Error saving meal for ${dateString}:`, err);
+        // Rollback optimistic update on failure
+        if (onMealSaved) {
+          onMealSaved(dateString, previousMealId);
+        }
+        alert('Failed to save meal selection');
       });
-  }, []);
+  };
 
   return saveMeal;
 };

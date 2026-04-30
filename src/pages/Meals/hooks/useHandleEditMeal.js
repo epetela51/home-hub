@@ -1,30 +1,21 @@
 import { useEditMeal } from './useEditMeal';
 
 /**
- * Orchestrates the edit meal flow: calls the API, parses response data,
- * and triggers onMealEdited callback so parent can update state.
+ * Orchestrates the edit meal API call.
+ * Returns a promise that resolves with the updated meal from the API.
  *
- * @param {Function} onMealEdited - Callback that receives (updatedMeal, originalMeal)
  * @returns {Function} handleEditMeal function
  */
-export const useHandleEditMeal = (onMealEdited) => {
+export const useHandleEditMeal = () => {
   const editMeal = useEditMeal();
 
   const handleEditMeal = async (mealId, originalMeal, mealData) => {
-    try {
-      const response = await editMeal({
-        mealId,
-        meal: mealData.meal,
-        note: mealData.note,
-      });
-
-      // Call the callback with the updated meal and original meal for comparison
-      if (onMealEdited) {
-        onMealEdited(response, originalMeal);
-      }
-    } catch (err) {
-      console.error('Failed to edit meal:', err);
-    }
+    const response = await editMeal({
+      mealId,
+      meal: mealData.meal,
+      note: mealData.note,
+    });
+    return response;
   };
 
   return handleEditMeal;

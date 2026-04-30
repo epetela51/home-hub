@@ -7,7 +7,7 @@ const useEditMealsFlow = (meals = [], onMealDeleted, onMealEdited) => {
   const [selectedMealId, setSelectedMealId] = useState(null);
   const [selectedMeal, setSelectedMeal] = useState(null);
   const handleDeleteMeal = useHandleDeleteMeal(onMealDeleted);
-  const handleEditMeal = useHandleEditMeal(onMealEdited);
+  const handleEditMeal = useHandleEditMeal();
 
   const handleMealSelect = (mealIdStr) => {
     const mealId = mealIdStr ? Number(mealIdStr) : null;
@@ -39,10 +39,13 @@ const useEditMealsFlow = (meals = [], onMealDeleted, onMealEdited) => {
 
   const handleSaveMeal = async ({ title, note }) => {
     if (selectedMealId) {
-      await handleEditMeal(selectedMealId, selectedMeal, {
+      const updatedMeal = await handleEditMeal(selectedMealId, selectedMeal, {
         meal: title,
         note,
       });
+      if (onMealEdited) {
+        onMealEdited(updatedMeal, selectedMeal);
+      }
       // Reset UI back to select mode and clear selection
       setMode('select');
       setSelectedMealId(null);

@@ -1,23 +1,35 @@
 import { useFetchMeals } from '../hooks/useFetchMeals';
 import { useMealSearch } from '../hooks/useMealSearch';
 import { useMealsLibraryForm } from '../hooks/useMealsLibraryForm';
+import { useMealLibraryEditor } from '../hooks/useMealLibraryEditor';
+import { useDeleteMeal } from '../hooks/useDeleteMeal';
 
 import TextInput from '../../../components/TextInput/TextInput';
 import Button from '../../../components/Button/Button';
-import MealList from '../MealPickerSheet/MealList';
+import ExpandableMealListItem from './ExpandableMealListItem';
+import MealEditModal from './MealEditModal';
 import NewMeals from '../NewMeals/NewMeals';
 
 /**
  * MealsLibrary - Full-page view for browsing all meals with search functionality.
- * Allows users to view and search the complete meals library independently
- * from the weekly meal planner.
- *
- * Now includes a dynamic collapsible form to add new meals without leaving the page.
+ * Allows users to view, search, edit, and delete meals.
+ * Also includes a dynamic collapsible form to add new meals without leaving the page.
  */
 const MealsLibrary = () => {
   const { meals, setMeals, isLoading } = useFetchMeals();
   const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
   const { isFormOpen, handleToggleForm, handleMealAdded } = useMealsLibraryForm(setMeals);
+  const performDelete = useDeleteMeal();
+  const {
+    expandedMealId,
+    selectedMealForEdit,
+    isModalOpen,
+    handleToggleMeal,
+    handleEditMeal,
+    handleDeleteMealClick,
+    handleMealUpdated,
+    handleModalClose,
+  } = useMealLibraryEditor(meals, setMeals, performDelete);
 
   const displayedMeals = filteredMeals(meals);
 
@@ -54,13 +66,36 @@ const MealsLibrary = () => {
         )}
 
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <MealList meals={displayedMeals} />
+          {displayedMeals.length > 0 ? (
+            <div>
+              {displayedMeals.map((meal) => (
+                <ExpandableMealListItem
+                  key={meal.id}
+                  meal={meal}
+                  isExpanded={expandedMealId === meal.id}
+                  onToggle={() => handleToggleMeal(meal.id)}
+                  onEdit={() => handleEditMeal(meal)}
+                  onDelete={() => handleDeleteMealClick(meal.id)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="px-4 py-6 text-center text-gray-500">No meals found</div>
+          )}
         </div>
 
         <div className="mt-4 text-sm text-gray-600">
           Showing {displayedMeals.length} of {meals.length} meals
         </div>
       </div>
+
+      {/* Edit Meal Modal */}
+      <MealEditModal
+        isOpen={isModalOpen}
+        meal={selectedMealForEdit}
+        onClose={handleModalClose}
+        onMealUpdated={handleMealUpdated}
+      />
     </div>
   );
 };

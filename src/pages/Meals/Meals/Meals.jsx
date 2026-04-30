@@ -7,7 +7,6 @@ import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
-import EditMeals from '../EditMeals/EditMeals';
 import WeekNavigation from '../WeekNavigation/WeekNavigation';
 
 const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -22,11 +21,7 @@ const Meals = () => {
 
   const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
 
-  const { handleMealDeleted, handleMealEdited, handleResetWeek } = useMealActions(
-    setMeals,
-    resetWeeklyPlan,
-    resetMealPlan
-  );
+  const { handleResetWeek } = useMealActions(setMeals, resetWeeklyPlan, resetMealPlan);
 
   // Memoize meals array so it only changes when content actually changes
   const memoizedMeals = useMemo(() => meals, [meals]);
@@ -71,13 +66,6 @@ const Meals = () => {
                   />
                 );
               })}
-            </div>
-            <div className="mt-8">
-              <EditMeals
-                meals={meals}
-                onMealDeleted={handleMealDeleted}
-                onMealEdited={handleMealEdited}
-              />
             </div>
           </>
         )}

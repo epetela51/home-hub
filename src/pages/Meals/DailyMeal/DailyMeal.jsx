@@ -8,7 +8,7 @@ import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
 const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
   const { isOpen, openSheet, closeSheet } = useMealPickerSheet();
   const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
-  const saveMeal = useSaveMealSelection();
+  const saveMeal = useSaveMealSelection(onMealSelected);
 
   const selectedMeal = meals.find((meal) => meal.id === mealId);
 
@@ -18,7 +18,7 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
 
   const handleSelectMeal = (selectedMealId) => {
     onMealSelected(dateString, selectedMealId);
-    saveMeal(dateString, selectedMealId);
+    saveMeal(dateString, selectedMealId, mealId);
     closeSheet();
     setSearchQuery('');
   };

@@ -12,6 +12,8 @@ import MealList from './MealList';
  * @param {string} searchQuery - Current search query value
  * @param {Function} onSearchChange - Callback when search input changes
  * @param {Function} onSelectMeal - Callback when a meal is selected
+ * @param {Object} currentMeal - The currently selected meal object (null if none selected)
+ * @param {Function} onClearMeal - Callback to clear the meal for the current day
  */
 const MealPickerSheet = ({
   isOpen,
@@ -20,6 +22,8 @@ const MealPickerSheet = ({
   searchQuery,
   onSearchChange,
   onSelectMeal,
+  currentMeal,
+  onClearMeal,
 }) => {
   if (!isOpen) return null;
 
@@ -45,6 +49,18 @@ const MealPickerSheet = ({
         <div className="px-4 py-3 border-b border-gray-200 flex-shrink-0">
           <TextInput value={searchQuery} onChange={onSearchChange} placeholder="Search meals..." />
         </div>
+
+        {/* Clear Day Button - Only show if a meal is currently selected */}
+        {currentMeal && (
+          <div className="px-4 py-3 border-b border-gray-200 flex-shrink-0">
+            <button
+              onClick={onClearMeal}
+              className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+            >
+              Clear Day
+            </button>
+          </div>
+        )}
 
         {/* Meal List */}
         <div className="overflow-y-auto flex-1">

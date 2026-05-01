@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useMealPlan } from '../hooks/useMealPlan';
 import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
 import { useFetchMeals } from '../hooks/useFetchMeals';
-import { useMealActions } from '../hooks/useMealActions';
+import { useResetWeek } from '../hooks/useResetWeek';
 import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 
 import Button from '../../../components/Button/Button';
@@ -13,21 +13,28 @@ const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 
 const Meals = () => {
   const [weekOffset, setWeekOffset] = useState(0);
-  const { meals, setMeals, weeklyPlan, isLoading } = useFetchMeals();
+  const { meals, setMeals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
 
+  // Get dates for the selected week
+  const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
+
   const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
 
-  const { handleResetWeek } = useMealActions(setMeals, resetWeeklyPlan, resetMealPlan);
+  const { handleResetWeek } = useResetWeek(
+    setMeals,
+    resetWeeklyPlan,
+    resetMealPlan,
+    setWeeklyPlan,
+    weekDates,
+    DAYS_OF_WEEK
+  );
 
   // Memoize meals array so it only changes when content actually changes
   const memoizedMeals = useMemo(() => meals, [meals]);
-
-  // Get dates for the selected week
-  const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
 
   return (
     <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-8">
@@ -43,7 +50,7 @@ const Meals = () => {
         />
 
         <button
-          onClick={handleResetWeek}
+          onClick={() => handleResetWeek(weekDates.Monday)}
           disabled={isResetting}
           className="px-4 py-2 my-6 bg-red-500 text-white rounded hover:bg-red-600 transition disabled:bg-red-300 disabled:cursor-not-allowed"
         >

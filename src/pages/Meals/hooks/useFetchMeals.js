@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Custom hook to fetch meals data from the API.
@@ -11,26 +11,22 @@ export const useFetchMeals = () => {
   const [weeklyPlan, setWeeklyPlan] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchMealsData = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const res = await fetch('/api/v2/meals');
-      if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
-      }
-      const data = await res.json();
-      setMeals(data.meals);
-      setWeeklyPlan(data.weeklyPlan);
-    } catch (err) {
-      console.error('Error fetching meals:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchMealsData = async () => {
+      try {
+        const res = await fetch('/api/v2/meals');
+        const data = await res.json();
+        setMeals(data.meals);
+        setWeeklyPlan(data.weeklyPlan);
+      } catch (err) {
+        console.error('Error fetching meals:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchMealsData();
-  }, [fetchMealsData]);
+  }, []);
 
   return { meals, setMeals, weeklyPlan, isLoading };
 };

@@ -28,5 +28,5 @@ export const useFetchMeals = () => {
     fetchMealsData();
   }, []);
 
-  return { meals, setMeals, weeklyPlan, isLoading };
+  return { meals, setMeals, weeklyPlan, setWeeklyPlan, isLoading };
 };

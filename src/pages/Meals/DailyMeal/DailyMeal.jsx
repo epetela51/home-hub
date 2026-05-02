@@ -18,14 +18,14 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
 
   const handleSelectMeal = (selectedMealId) => {
     onMealSelected(dateString, selectedMealId);
-    saveMeal(dateString, selectedMealId, mealId);
+    saveMeal(dateString, selectedMealId, mealId).catch(() => {});
     closeSheet();
     setSearchQuery('');
   };
 
   const handleClearMeal = () => {
     onMealSelected(dateString, null);
-    saveMeal(dateString, null, mealId);
+    saveMeal(dateString, null, mealId).catch(() => {});
     closeSheet();
     setSearchQuery('');
   };

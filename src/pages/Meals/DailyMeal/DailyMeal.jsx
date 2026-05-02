@@ -1,7 +1,10 @@
+import React from 'react';
+import { useMemo } from 'react';
 import { formatDayAndDate, parseLocalDate } from '../../../utils/getWeekDates';
 import { useMealPickerSheet } from '../hooks/useMealPickerSheet';
 import { useMealSearch } from '../hooks/useMealSearch';
 import { useSaveMealSelection } from '../hooks/useSaveMealSelection';
+import { useDailyMealHandlers } from '../hooks/useDailyMealHandlers';
 
 import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
 
@@ -9,6 +12,14 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
   const { isOpen, openSheet, closeSheet } = useMealPickerSheet();
   const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
   const saveMeal = useSaveMealSelection(onMealSelected);
+  const { handleSelectMeal, handleClearMeal } = useDailyMealHandlers(
+    dateString,
+    mealId,
+    onMealSelected,
+    saveMeal,
+    closeSheet,
+    setSearchQuery
+  );
 
   const selectedMeal = meals.find((meal) => meal.id === mealId);
 
@@ -16,22 +27,7 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
   const date = parseLocalDate(dateString);
   const formattedDate = formatDayAndDate(date);
 
-  const closeAndReset = () => {
-    closeSheet();
-    setSearchQuery('');
-  };
-
-  const handleSelectMeal = (selectedMealId) => {
-    onMealSelected(dateString, selectedMealId);
-    saveMeal(dateString, selectedMealId, mealId).catch(() => {});
-    closeAndReset();
-  };
-
-  const handleClearMeal = () => {
-    onMealSelected(dateString, null);
-    saveMeal(dateString, null, mealId).catch(() => {});
-    closeAndReset();
-  };
+  const memoizedFilteredMeals = useMemo(() => filteredMeals(meals), [meals, filteredMeals]);
 
   return (
     <>
@@ -59,7 +55,7 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
       <MealPickerSheet
         isOpen={isOpen}
         onClose={closeSheet}
-        filteredMeals={filteredMeals(meals)}
+        filteredMeals={memoizedFilteredMeals}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onSelectMeal={handleSelectMeal}
@@ -70,4 +66,4 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
   );
 };
 
-export default DailyMeal;
+export default React.memo(DailyMeal);

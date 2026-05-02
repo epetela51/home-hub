@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * MealListItem - Individual meal item in the meal picker sheet.
  * Presentational component (UI only, no business logic).
@@ -19,4 +21,4 @@ const MealListItem = ({ meal, onClick }) => {
   );
 };
 
-export default MealListItem;
+export default React.memo(MealListItem);

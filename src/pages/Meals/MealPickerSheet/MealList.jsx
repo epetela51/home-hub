@@ -1,3 +1,4 @@
+import React from 'react';
 import MealListItem from './MealListItem';
 
 /**
@@ -26,4 +27,4 @@ const MealList = ({ meals, onSelectMeal = () => {}, emptyMessage = 'No meals fou
   );
 };
 
-export default MealList;
+export default React.memo(MealList);

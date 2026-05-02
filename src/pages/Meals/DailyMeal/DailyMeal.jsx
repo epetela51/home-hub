@@ -16,18 +16,21 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
   const date = parseLocalDate(dateString);
   const formattedDate = formatDayAndDate(date);
 
+  const closeAndReset = () => {
+    closeSheet();
+    setSearchQuery('');
+  };
+
   const handleSelectMeal = (selectedMealId) => {
     onMealSelected(dateString, selectedMealId);
     saveMeal(dateString, selectedMealId, mealId).catch(() => {});
-    closeSheet();
-    setSearchQuery('');
+    closeAndReset();
   };
 
   const handleClearMeal = () => {
     onMealSelected(dateString, null);
     saveMeal(dateString, null, mealId).catch(() => {});
-    closeSheet();
-    setSearchQuery('');
+    closeAndReset();
   };
 
   return (

@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 /**
  * Custom hook to edit an existing meal via API.
  * Returns a handler function that makes a PUT /api/v2/meals/<meal-id> call.
@@ -7,7 +5,7 @@ import { useCallback } from 'react';
  * @returns {Function} Handler function that takes { mealId, meal, note } and edits the meal
  */
 export const useEditMeal = () => {
-  const editMeal = useCallback(async (mealData) => {
+  const editMeal = async (mealData) => {
     const { mealId, meal, note } = mealData;
 
     const payload = {
@@ -35,7 +33,7 @@ export const useEditMeal = () => {
       console.error('Error editing meal:', err);
       throw err;
     }
-  }, []);
+  };
 
   return editMeal;
 };

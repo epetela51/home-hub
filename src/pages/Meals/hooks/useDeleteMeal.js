@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 /**
  * Custom hook to delete a meal from the API.
  * Makes a DELETE request to /api/v2/meals/<meal-id>
@@ -7,7 +5,7 @@ import { useCallback } from 'react';
  * @returns {Function} deleteMeal function that takes a meal ID and returns a promise with response data
  */
 export const useDeleteMeal = () => {
-  const deleteMeal = useCallback(async (mealId) => {
+  const deleteMeal = async (mealId) => {
     const res = await fetch(`/api/v2/meals/${mealId}`, {
       method: 'DELETE',
       headers: {
@@ -18,7 +16,7 @@ export const useDeleteMeal = () => {
       throw new Error(`API error: ${res.status}`);
     }
     return await res.json();
-  }, []);
+  };
 
   return deleteMeal;
 };

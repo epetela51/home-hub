@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 /**
  * Custom hook to add a new meal via API.
  * Returns a handler function that makes a POST /api/v2/meals call.
@@ -7,7 +5,7 @@ import { useCallback } from 'react';
  * @returns {Function} Handler function that takes {meal, note} and adds the meal
  */
 export const useAddMeal = () => {
-  const addMeal = useCallback(async (mealData) => {
+  const addMeal = async (mealData) => {
     const { meal, note } = mealData;
 
     const payload = {
@@ -35,7 +33,7 @@ export const useAddMeal = () => {
       console.error('Error adding meal:', err);
       throw err;
     }
-  }, []);
+  };
 
   return addMeal;
 };

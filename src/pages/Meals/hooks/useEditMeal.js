@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { callMealMutationAPI } from '../utils/callMealMutationAPI';
 
 /**
  * Custom hook to edit an existing meal via API.
@@ -7,7 +7,7 @@ import { useCallback } from 'react';
  * @returns {Function} Handler function that takes { mealId, meal, note } and edits the meal
  */
 export const useEditMeal = () => {
-  const editMeal = useCallback(async (mealData) => {
+  const editMeal = async (mealData) => {
     const { mealId, meal, note } = mealData;
 
     const payload = {
@@ -15,27 +15,9 @@ export const useEditMeal = () => {
       note: note || null,
     };
 
-    try {
-      const res = await fetch(`/api/v2/meals/${mealId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      return data?.meal;
-    } catch (err) {
-      console.error('Error editing meal:', err);
-      throw err;
-    }
-  }, []);
+    const data = await callMealMutationAPI(`/api/v2/meals/${mealId}`, 'PUT', payload);
+    return data?.meal;
+  };
 
   return editMeal;
 };

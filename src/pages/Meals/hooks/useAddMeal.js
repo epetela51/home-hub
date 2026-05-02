@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { callMealMutationAPI } from '../utils/callMealMutationAPI';
 
 /**
  * Custom hook to add a new meal via API.
@@ -7,7 +7,7 @@ import { useCallback } from 'react';
  * @returns {Function} Handler function that takes {meal, note} and adds the meal
  */
 export const useAddMeal = () => {
-  const addMeal = useCallback(async (mealData) => {
+  const addMeal = async (mealData) => {
     const { meal, note } = mealData;
 
     const payload = {
@@ -15,27 +15,9 @@ export const useAddMeal = () => {
       note: note || null,
     };
 
-    try {
-      const res = await fetch('/api/v2/meals', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      return data?.meal;
-    } catch (err) {
-      console.error('Error adding meal:', err);
-      throw err;
-    }
-  }, []);
+    const data = await callMealMutationAPI('/api/v2/meals', 'POST', payload);
+    return data?.meal;
+  };
 
   return addMeal;
 };

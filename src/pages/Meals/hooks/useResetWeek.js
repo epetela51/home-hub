@@ -5,7 +5,6 @@ import { formatDateToString } from '../../../utils/getWeekDates';
  * Custom hook that encapsulates week reset logic.
  * Handles resetting the weekly meal plan via API and updating local state.
  *
- * @param {Function} setMeals - State setter for the meals array
  * @param {Function} resetWeeklyPlan - Function to reset the weekly plan on API
  * @param {Function} resetMealPlan - Function to reset the local meal plan state
  * @param {Function} setWeeklyPlan - State setter for the weekly plan
@@ -14,7 +13,6 @@ import { formatDateToString } from '../../../utils/getWeekDates';
  * @returns {Object} Object containing handleResetWeek
  */
 export const useResetWeek = (
-  setMeals,
   resetWeeklyPlan,
   resetMealPlan,
   setWeeklyPlan,

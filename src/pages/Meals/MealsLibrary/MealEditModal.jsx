@@ -13,13 +13,14 @@ import MealForm from '../MealForm/MealForm';
  * @param {Function} onMealUpdated - Callback when meal is successfully updated with (updatedMeal)
  */
 const MealEditModal = ({ isOpen, meal, onClose, onMealUpdated }) => {
+  if (!isOpen) return null;
+  if (!meal) return null;
+
   const { isSubmitSuccess, handleSubmit, handleCancel } = useEditMealModal(
     meal,
     onClose,
     onMealUpdated
   );
-
-  if (!isOpen || !meal) return null;
 
   return (
     <>

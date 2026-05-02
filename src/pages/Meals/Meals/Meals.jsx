@@ -13,7 +13,7 @@ const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 
 const Meals = () => {
   const [weekOffset, setWeekOffset] = useState(0);
-  const { meals, setMeals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
+  const { meals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
@@ -25,16 +25,12 @@ const Meals = () => {
   const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
 
   const { handleResetWeek } = useResetWeek(
-    setMeals,
     resetWeeklyPlan,
     resetMealPlan,
     setWeeklyPlan,
     weekDates,
     DAYS_OF_WEEK
   );
-
-  // Memoize meals array so it only changes when content actually changes
-  const memoizedMeals = useMemo(() => meals, [meals]);
 
   return (
     <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-8">
@@ -68,7 +64,7 @@ const Meals = () => {
                     key={day}
                     dateString={dateString}
                     mealId={mealPlan[dateString]}
-                    meals={memoizedMeals}
+                    meals={meals}
                     onMealSelected={handlePlanChange}
                   />
                 );

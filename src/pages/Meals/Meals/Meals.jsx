@@ -13,7 +13,7 @@ const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 
 const Meals = () => {
   const [weekOffset, setWeekOffset] = useState(0);
-  const { meals, setMeals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
+  const { meals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
@@ -25,7 +25,6 @@ const Meals = () => {
   const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
 
   const { handleResetWeek } = useResetWeek(
-    setMeals,
     resetWeeklyPlan,
     resetMealPlan,
     setWeeklyPlan,

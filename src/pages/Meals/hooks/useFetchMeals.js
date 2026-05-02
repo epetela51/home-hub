@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
  * Custom hook to fetch meals data from the API.
  * Manages state and fetching on mount.
  *
- * @returns {Object} Object containing { meals, setMeals, weeklyPlan, isLoading }
+ * @returns {Object} Object containing { meals, weeklyPlan, setWeeklyPlan, isLoading }
  */
 export const useFetchMeals = () => {
   const [meals, setMeals] = useState([]);
@@ -28,5 +28,5 @@ export const useFetchMeals = () => {
     fetchMealsData();
   }, []);
 
-  return { meals, setMeals, weeklyPlan, setWeeklyPlan, isLoading };
+  return { meals, weeklyPlan, setWeeklyPlan, isLoading };
 };

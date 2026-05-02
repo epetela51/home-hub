@@ -32,9 +32,6 @@ const Meals = () => {
     DAYS_OF_WEEK
   );
 
-  // Memoize meals array so it only changes when content actually changes
-  const memoizedMeals = useMemo(() => meals, [meals]);
-
   return (
     <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-8">
       <div className="flex flex-col gap-4 w-fit mx-auto">
@@ -67,7 +64,7 @@ const Meals = () => {
                     key={day}
                     dateString={dateString}
                     mealId={mealPlan[dateString]}
-                    meals={memoizedMeals}
+                    meals={meals}
                     onMealSelected={handlePlanChange}
                   />
                 );

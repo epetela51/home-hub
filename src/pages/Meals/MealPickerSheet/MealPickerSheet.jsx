@@ -3,6 +3,7 @@ import React from 'react';
 import TextInput from '../../../components/TextInput/TextInput';
 import CloseButton from '../../../components/CloseButton/CloseButton';
 import MealList from './MealList';
+import MealAddModal from '../MealsLibrary/MealAddModal';
 
 /**
  * MealPickerSheet - Bottom sheet component for selecting meals.
@@ -16,6 +17,10 @@ import MealList from './MealList';
  * @param {Function} onSelectMeal - Callback when a meal is selected
  * @param {Object} currentMeal - The currently selected meal object (null if none selected)
  * @param {Function} onClearMeal - Callback to clear the meal for the current day
+ * @param {boolean} isAddMealModalOpen - Whether the add meal modal is open
+ * @param {Function} onOpenAddMealModal - Callback to open the add meal modal
+ * @param {Function} onCloseAddMealModal - Callback to close the add meal modal
+ * @param {Function} handleMealAdded - Callback when a meal is successfully added
  */
 const MealPickerSheet = ({
   isOpen,
@@ -26,13 +31,20 @@ const MealPickerSheet = ({
   onSelectMeal,
   currentMeal,
   onClearMeal,
+  isAddMealModalOpen,
+  onOpenAddMealModal,
+  onCloseAddMealModal,
+  handleMealAdded,
 }) => {
   if (!isOpen) return null;
 
   return (
     <>
       {/* Backdrop overlay */}
-      <div onClick={onClose} className="fixed inset-0 z-40 bg-black/50 transition-opacity" />
+      <div
+        onClick={onClose}
+        className={`fixed inset-0 z-40 transition-opacity ${isAddMealModalOpen ? 'bg-black/70' : 'bg-black/50'}`}
+      />
 
       {/* Bottom sheet */}
       <div
@@ -44,7 +56,15 @@ const MealPickerSheet = ({
         {/* Header */}
         <div className="flex items-center justify-between gap-3 px-4 py-4 border-b border-gray-200 flex-shrink-0">
           <h2 className="text-lg font-semibold text-gray-900">Select a Meal</h2>
-          <CloseButton onClick={onClose} />
+          <div className="flex gap-2">
+            <button
+              onClick={onOpenAddMealModal}
+              className="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition text-sm font-medium"
+            >
+              + Add Meal
+            </button>
+            <CloseButton onClick={onClose} />
+          </div>
         </div>
 
         {/* Search Input */}
@@ -68,7 +88,19 @@ const MealPickerSheet = ({
         <div className="overflow-y-auto flex-1">
           <MealList meals={filteredMeals} onSelectMeal={onSelectMeal} />
         </div>
+
+        {/* Dark overlay when add meal modal is open */}
+        {isAddMealModalOpen && (
+          <div className="absolute inset-0 z-40 bg-black/50 rounded-t-2xl pointer-events-none" />
+        )}
       </div>
+
+      {/* Add Meal Modal */}
+      <MealAddModal
+        isOpen={isAddMealModalOpen}
+        onClose={onCloseAddMealModal}
+        onMealAdded={handleMealAdded}
+      />
     </>
   );
 };

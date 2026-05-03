@@ -11,11 +11,15 @@ import WeekNavigation from '../WeekNavigation/WeekNavigation';
 
 const Meals = () => {
   const [weekOffset, setWeekOffset] = useState(0);
-  const { meals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
+  const { meals, setMeals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
+
+  const handleMealAdded = (newMeal) => {
+    setMeals((prev) => [...prev, newMeal]);
+  };
 
   // Get dates for the selected week
   const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
@@ -61,6 +65,7 @@ const Meals = () => {
                     mealId={mealPlan[dateString]}
                     meals={meals}
                     onMealSelected={handlePlanChange}
+                    onMealAdded={handleMealAdded}
                   />
                 );
               })}

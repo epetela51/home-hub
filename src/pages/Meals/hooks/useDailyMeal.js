@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useMealPickerSheet } from './useMealPickerSheet';
+import { useMealSelectionSheet } from './useMealSelectionSheet';
 import { useMealSearch } from './useMealSearch';
 import { useSaveMealSelection } from './useSaveMealSelection';
 import { useDailyMealHandlers } from './useDailyMealHandlers';
@@ -12,10 +12,20 @@ import { useDailyMealHandlers } from './useDailyMealHandlers';
  * @param {string | null} mealId - Current meal ID for the day
  * @param {Array} meals - Array of all available meals
  * @param {Function} onMealSelected - Callback when meal is selected/cleared
+ * @param {Function} onMealAdded - Callback when a new meal is added
  * @returns {Object} All state and handlers needed by DailyMeal component
  */
-export const useDailyMeal = (dateString, mealId, meals, onMealSelected) => {
-  const { isOpen, openSheet, closeSheet } = useMealPickerSheet();
+export const useDailyMeal = (dateString, mealId, meals, onMealSelected, onMealAdded) => {
+  const {
+    isOpen,
+    openSheet,
+    closeSheet,
+    isAddMealModalOpen,
+    openAddMealModal,
+    closeAddMealModal,
+    handleMealAdded,
+  } = useMealSelectionSheet(onMealAdded);
+
   const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
   const saveMeal = useSaveMealSelection(onMealSelected);
   const { handleSelectMeal, handleClearMeal } = useDailyMealHandlers(
@@ -31,14 +41,23 @@ export const useDailyMeal = (dateString, mealId, meals, onMealSelected) => {
   const filteredMealList = useMemo(() => filteredMeals(meals), [meals, filteredMeals]);
 
   return {
+    // Picker sheet state and handlers
     isOpen,
     openSheet,
     closeSheet,
+    // Search state and handlers
     searchQuery,
     setSearchQuery,
+    // Meal data
     filteredMealList,
+    selectedMeal,
+    // Meal selection handlers
     handleSelectMeal,
     handleClearMeal,
-    selectedMeal,
+    // Add meal modal state and handlers
+    isAddMealModalOpen,
+    openAddMealModal,
+    closeAddMealModal,
+    handleMealAdded,
   };
 };

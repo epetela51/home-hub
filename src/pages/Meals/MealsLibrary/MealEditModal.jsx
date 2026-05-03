@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { useEditMealModal } from '../hooks/useEditMealModal';
 
+import Modal from '../../../components/Modal/Modal';
 import MealForm from '../MealForm/MealForm';
 
 /**
@@ -25,28 +24,18 @@ const MealEditModal = ({ isOpen, meal, onClose, onMealUpdated }) => {
   if (!meal) return null;
 
   return (
-    <>
-      {/* Backdrop overlay */}
-      <div onClick={handleCancel} className="fixed inset-0 z-40 bg-black/50 transition-opacity" />
-
-      {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-          <div className="p-6">
-            <MealForm
-              initialTitle={meal.meal}
-              initialNote={meal.note || ''}
-              title="Edit Meal"
-              submitButtonLabel="Save Meal"
-              onSubmit={handleSubmit}
-              onCancel={handleCancel}
-              showCancelButton={true}
-              isSubmitSuccess={isSubmitSuccess}
-            />
-          </div>
-        </div>
-      </div>
-    </>
+    <Modal isOpen={isOpen} onBackdropClick={handleCancel}>
+      <MealForm
+        initialTitle={meal.meal}
+        initialNote={meal.note || ''}
+        title="Edit Meal"
+        submitButtonLabel="Save Meal"
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+        showCancelButton={true}
+        isSubmitSuccess={isSubmitSuccess}
+      />
+    </Modal>
   );
 };
 

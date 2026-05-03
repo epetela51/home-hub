@@ -4,7 +4,7 @@ import { useDailyMeal } from '../hooks/useDailyMeal';
 
 import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
 
-const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
+const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) => {
   const {
     isOpen,
     openSheet,
@@ -15,7 +15,11 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
     handleSelectMeal,
     handleClearMeal,
     selectedMeal,
-  } = useDailyMeal(dateString, mealId, meals, onMealSelected);
+    isAddMealModalOpen,
+    openAddMealModal,
+    closeAddMealModal,
+    handleMealAdded,
+  } = useDailyMeal(dateString, mealId, meals, onMealSelected, onMealAdded);
 
   // Parse as local date to avoid timezone offset (parseLocalDate handles YYYY-MM-DD correctly)
   const date = parseLocalDate(dateString);
@@ -53,6 +57,10 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
         onSelectMeal={handleSelectMeal}
         currentMeal={selectedMeal}
         onClearMeal={handleClearMeal}
+        isAddMealModalOpen={isAddMealModalOpen}
+        onOpenAddMealModal={openAddMealModal}
+        onCloseAddMealModal={closeAddMealModal}
+        handleMealAdded={handleMealAdded}
       />
     </>
   );

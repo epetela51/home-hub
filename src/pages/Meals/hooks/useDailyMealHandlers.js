@@ -8,7 +8,7 @@ import { useCallback } from 'react';
  * @param {string} mealId - The current meal ID for the date
  * @param {Function} onMealSelected - Callback to update meal plan (from parent)
  * @param {Function} saveMeal - Async function to save meal to API (from useSaveMealSelection)
- * @param {Function} closeSheet - Function to close the meal picker sheet (from useMealPickerSheet)
+ * @param {Function} closeSheet - Function to close the meal selection sheet (from useMealSelectionSheet)
  * @param {Function} setSearchQuery - Function to clear search query (from useMealSearch)
  *
  * @returns {Object} { handleSelectMeal, handleClearMeal }

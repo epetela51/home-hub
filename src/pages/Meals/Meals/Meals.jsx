@@ -1,42 +1,47 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useMealPlan } from '../hooks/useMealPlan';
-import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
+import { useWeekReset } from '../hooks/useWeekReset';
 import { useFetchMeals } from '../hooks/useFetchMeals';
-import { useMealActions } from '../hooks/useMealActions';
+import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
+import { DAYS_OF_WEEK } from '../constants';
 
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
-import NewMeals from '../NewMeals/NewMeals';
-import EditMeals from '../EditMeals/EditMeals';
-
-const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+import WeekNavigation from '../WeekNavigation/WeekNavigation';
 
 const Meals = () => {
-  const { meals, setMeals, weeklyPlan, isLoading } = useFetchMeals();
+  const [weekOffset, setWeekOffset] = useState(0);
+  const { meals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
   });
 
-  const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
+  // Get dates for the selected week
+  const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
 
-  const { handleMealAdded, handleMealDeleted, handleMealEdited, handleResetWeek } = useMealActions(
-    setMeals,
-    resetWeeklyPlan,
-    resetMealPlan
+  const { handleResetWeek, isResetting } = useWeekReset(
+    resetMealPlan,
+    setWeeklyPlan,
+    weekDates,
+    DAYS_OF_WEEK
   );
 
-  // Memoize meals array so it only changes when content actually changes
-  const memoizedMeals = useMemo(() => meals, [meals]);
-
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-8">
-      <Button url="/" text="Go Home" />
+    <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-8">
+      <div className="flex flex-col gap-4 w-fit mx-auto">
+        <Button url="/" text="Go Home" />
+        <Button url="/meals/library" text="Meals Library" />
+      </div>
       <section className="mt-20">
-        <h2 className="text-2xl font-bold text-gray-900">Weekly Meal Plan</h2>
+        <WeekNavigation
+          weekOffset={weekOffset}
+          setWeekOffset={setWeekOffset}
+          weekDates={weekDates}
+        />
 
         <button
-          onClick={handleResetWeek}
+          onClick={() => handleResetWeek(weekDates.Monday)}
           disabled={isResetting}
           className="px-4 py-2 my-6 bg-red-500 text-white rounded hover:bg-red-600 transition disabled:bg-red-300 disabled:cursor-not-allowed"
         >
@@ -47,25 +52,18 @@ const Meals = () => {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {DAYS_OF_WEEK.map((day) => (
-                <DailyMeal
-                  key={day}
-                  day={day}
-                  mealId={mealPlan[day]}
-                  meals={memoizedMeals}
-                  onMealChange={handlePlanChange}
-                />
-              ))}
-            </div>
-            <div className="mt-8">
-              <NewMeals onMealAdded={handleMealAdded} />
-            </div>
-            <div className="mt-8">
-              <EditMeals
-                meals={meals}
-                onMealDeleted={handleMealDeleted}
-                onMealEdited={handleMealEdited}
-              />
+              {DAYS_OF_WEEK.map((day) => {
+                const dateString = formatDateToString(weekDates[day]);
+                return (
+                  <DailyMeal
+                    key={day}
+                    dateString={dateString}
+                    mealId={mealPlan[dateString]}
+                    meals={meals}
+                    onMealSelected={handlePlanChange}
+                  />
+                );
+              })}
             </div>
           </>
         )}

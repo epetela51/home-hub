@@ -1,34 +1,61 @@
-import { useCallback } from 'react';
-import { useSaveMealSelection } from '../hooks/useSaveMealSelection';
+import React from 'react';
+import { formatDayAndDate, parseLocalDate } from '../../../utils/getWeekDates';
+import { useDailyMeal } from '../hooks/useDailyMeal';
 
-import SelectField from '../../../components/SelectField/SelectField';
+import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
 
-const DailyMeal = ({ day, mealId, meals, onMealChange }) => {
-  const saveMeal = useSaveMealSelection();
+const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
+  const {
+    isOpen,
+    openSheet,
+    closeSheet,
+    searchQuery,
+    setSearchQuery,
+    filteredMealList,
+    handleSelectMeal,
+    handleClearMeal,
+    selectedMeal,
+  } = useDailyMeal(dateString, mealId, meals, onMealSelected);
 
-  const handleChange = useCallback(
-    (selectedMealId) => {
-      const mealIdValue = selectedMealId === '' ? null : Number(selectedMealId);
-      onMealChange(day, mealIdValue);
-      saveMeal(day, mealIdValue);
-    },
-    [day, onMealChange, saveMeal]
-  );
-
-  // Find the selected meal to display next to the day
-  const selectedMeal = meals.find((meal) => meal.id === mealId);
-  const dayDisplay = selectedMeal ? `${day} - ${selectedMeal.meal}` : day;
+  // Parse as local date to avoid timezone offset (parseLocalDate handles YYYY-MM-DD correctly)
+  const date = parseLocalDate(dateString);
+  const formattedDate = formatDayAndDate(date);
 
   return (
-    <div className="p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-      <h3
-        className={`text-lg font-semibold mb-3 ${selectedMeal ? 'text-green-600' : 'text-red-600'}`}
+    <>
+      <div
+        onClick={openSheet}
+        className="flex gap-4 p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
       >
-        {dayDisplay}
-      </h3>
-      <SelectField value={mealId || ''} onChange={handleChange} options={meals} />
-    </div>
+        {/* Left Column: Day and Date Box */}
+        <div className="w-14 flex flex-col items-center justify-center bg-gray-50 border border-gray-300 rounded-lg py-1">
+          <div className="text-sm font-bold text-gray-700">{formattedDate.day}</div>
+          <div className="text-xl font-semibold text-gray-900">{formattedDate.date}</div>
+        </div>
+
+        {/* Right Column: Meal Display */}
+        <div className="flex-1 flex flex-col justify-center">
+          <h3
+            className={`text-lg font-semibold text-left ${selectedMeal ? 'text-green-600' : 'text-red-600'}`}
+          >
+            {selectedMeal ? selectedMeal.meal : `Nothing planned for ${formattedDate.day}`}
+          </h3>
+        </div>
+      </div>
+
+      {/* Meal Picker Sheet */}
+      <MealPickerSheet
+        isOpen={isOpen}
+        onClose={closeSheet}
+        filteredMeals={filteredMealList}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onSelectMeal={handleSelectMeal}
+        currentMeal={selectedMeal}
+        onClearMeal={handleClearMeal}
+      />
+    </>
   );
 };
 
-export default DailyMeal;
+export default React.memo(DailyMeal);

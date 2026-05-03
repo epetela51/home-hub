@@ -1,21 +1,21 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export const useMealPlan = ({ initialMealPlan = {} }) => {
-  const [mealChange, setmealChange] = useState({});
+  const [mealChange, setMealChange] = useState({});
 
   // Merge initialMealPlan with user mealChange (mealChange override initial)
   const mealPlan = { ...initialMealPlan, ...mealChange };
 
-  const handlePlanChange = useCallback((day, mealId) => {
-    setmealChange((prev) => ({
+  const handlePlanChange = (day, mealId) => {
+    setMealChange((prev) => ({
       ...prev,
       [day]: mealId,
     }));
-  }, []);
+  };
 
-  const resetMealPlan = useCallback(() => {
-    setmealChange({});
-  }, []);
+  const resetMealPlan = () => {
+    setMealChange({});
+  };
 
   return { mealPlan, handlePlanChange, resetMealPlan };
 };

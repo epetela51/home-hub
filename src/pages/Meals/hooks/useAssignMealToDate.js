@@ -3,7 +3,7 @@ import { useSaveMealSelection } from './useSaveMealSelection';
 
 /**
  * Custom hook to handle meal assignment to a specific date.
- * Wraps useSaveMealSelection with feedback logic (success alert).
+ * Wraps useSaveMealSelection with error handling.
  *
  * @returns {Function} assignMealToDate handler
  *   Signature: (mealId: string, dateString: string) => Promise
@@ -17,8 +17,6 @@ export const useAssignMealToDate = () => {
     async (mealId, dateString) => {
       try {
         await saveMeal(dateString, mealId, null);
-        // Show success feedback
-        alert(`Meal assigned for ${dateString}!`);
       } catch (err) {
         console.error('Failed to assign meal:', err);
         // Error alert is already shown in useSaveMealSelection

@@ -1,9 +1,9 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 
 /**
  * Custom hook to manage state for the AssignMealModal.
- * Handles week navigation, date selection, and submission handlers.
+ * Handles week navigation, date selection, submission, and success feedback.
  *
  * @param {string} mealId - ID of the meal being assigned
  * @param {Function} onAssign - Callback when meal is assigned (mealId, dateString) => void
@@ -12,6 +12,7 @@ import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
  *   - weekOffset: current week offset (-1, 0, 1)
  *   - selectedDateString: currently selected date (YYYY-MM-DD or null)
  *   - weekDates: date objects for the current week
+ *   - successMessage: success message to display (or null)
  *   - handlePreviousWeek: navigate to previous week
  *   - handleNextWeek: navigate to next week
  *   - handleSelectDate: select a date
@@ -21,9 +22,23 @@ import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 export const useAssignMealModalState = (mealId, onAssign, onClose) => {
   const [weekOffset, setWeekOffset] = useState(0);
   const [selectedDateString, setSelectedDateString] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   // Calculate week dates based on offset
   const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
+
+  // Auto-close modal after success message displays
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setWeekOffset(0);
+        setSelectedDateString(null);
+        setSuccessMessage(null);
+        onClose();
+      }, 1000); // Show message for 1 second
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage, onClose]);
 
   const handlePreviousWeek = useCallback(() => {
     setWeekOffset((prev) => Math.max(prev - 1, -1));
@@ -44,15 +59,15 @@ export const useAssignMealModalState = (mealId, onAssign, onClose) => {
   const handleReset = useCallback(() => {
     setWeekOffset(0);
     setSelectedDateString(null);
+    setSuccessMessage(null);
   }, []);
 
   const handleSubmit = useCallback(() => {
     if (selectedDateString && mealId) {
       onAssign(mealId, selectedDateString);
-      handleReset();
-      onClose();
+      setSuccessMessage('✓ Meal assigned!');
     }
-  }, [selectedDateString, mealId, onAssign, handleReset, onClose]);
+  }, [selectedDateString, mealId, onAssign]);
 
   const handleCancel = useCallback(() => {
     handleReset();
@@ -63,6 +78,7 @@ export const useAssignMealModalState = (mealId, onAssign, onClose) => {
     weekOffset,
     selectedDateString,
     weekDates,
+    successMessage,
     handlePreviousWeek,
     handleNextWeek,
     handleSelectDate,

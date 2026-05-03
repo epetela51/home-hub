@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { getWeekLabel, getFormattedDateRange } from '../../../utils/getWeekDates';
 
 import WeekNavigationButtons from './WeekNavigationButtons';

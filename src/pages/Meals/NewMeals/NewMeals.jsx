@@ -1,6 +1,6 @@
-import MealForm from '../MealForm/MealForm';
-
 import { useAddMealFlow } from '../hooks/useAddMealFlow';
+
+import MealForm from '../MealForm/MealForm';
 
 const NewMeals = ({ onMealAdded }) => {
   const { handleAddMeal, isSuccessful, formResetKey } = useAddMealFlow(onMealAdded);

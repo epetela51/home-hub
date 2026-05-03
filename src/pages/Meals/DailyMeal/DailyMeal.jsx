@@ -1,10 +1,14 @@
 import React from 'react';
 import { formatDayAndDate, parseLocalDate } from '../../../utils/getWeekDates';
 import { useDailyMeal } from '../hooks/useDailyMeal';
+import { useNoteModal } from '../hooks/useNoteModal';
 
 import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
+import NoteModal from '../components/NoteModal';
 
 const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) => {
+  const { isOpen: noteModalOpen, noteContent, openNote, closeNote } = useNoteModal();
+
   const {
     isOpen,
     openSheet,
@@ -25,6 +29,13 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
   const date = parseLocalDate(dateString);
   const formattedDate = formatDayAndDate(date);
 
+  const handleNoteButtonClick = (e) => {
+    e.stopPropagation();
+    if (selectedMeal?.note) {
+      openNote(selectedMeal.note);
+    }
+  };
+
   return (
     <>
       <div
@@ -38,12 +49,22 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
         </div>
 
         {/* Right Column: Meal Display */}
-        <div className="flex-1 flex flex-col justify-center">
-          <h3
-            className={`text-lg font-semibold text-left ${selectedMeal ? 'text-green-600' : 'text-red-600'}`}
-          >
-            {selectedMeal ? selectedMeal.meal : `Nothing planned for ${formattedDate.day}`}
-          </h3>
+        <div className="flex-1 flex items-center justify-between gap-4">
+          <div className="flex-1">
+            <h3
+              className={`text-lg font-semibold text-left ${selectedMeal ? 'text-green-600' : 'text-red-600'}`}
+            >
+              {selectedMeal ? selectedMeal.meal : `Nothing planned for ${formattedDate.day}`}
+            </h3>
+          </div>
+          {selectedMeal?.note && (
+            <button
+              onClick={handleNoteButtonClick}
+              className="w-3 h-3 bg-green-500 rounded-full flex-shrink-0 hover:bg-green-600 transition-colors"
+              title="View note"
+              aria-label="View meal note"
+            />
+          )}
         </div>
       </div>
 
@@ -62,6 +83,9 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
         onCloseAddMealModal={closeAddMealModal}
         handleMealAdded={handleMealAdded}
       />
+
+      {/* Note Modal */}
+      <NoteModal isOpen={noteModalOpen} noteContent={noteContent} onClose={closeNote} />
     </>
   );
 };

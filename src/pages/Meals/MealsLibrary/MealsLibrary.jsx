@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useFetchMeals } from '../hooks/useFetchMeals';
 import { useMealSearch } from '../hooks/useMealSearch';
 import { useMealsLibraryForm } from '../hooks/useMealsLibraryForm';
@@ -34,7 +35,7 @@ const MealsLibrary = () => {
 
   useMealLibraryStateSync(isFormOpen, expandedMealId, handleToggleMeal);
 
-  const displayedMeals = filteredMeals(meals);
+  const displayedMeals = useMemo(() => filteredMeals(meals), [meals, filteredMeals]);
 
   if (isLoading) {
     return (

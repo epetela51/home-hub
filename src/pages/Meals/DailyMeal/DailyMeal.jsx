@@ -11,7 +11,7 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
     closeSheet,
     searchQuery,
     setSearchQuery,
-    filteredMeals: memoizedFilteredMeals,
+    filteredMealList,
     handleSelectMeal,
     handleClearMeal,
     selectedMeal,
@@ -47,7 +47,7 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
       <MealPickerSheet
         isOpen={isOpen}
         onClose={closeSheet}
-        filteredMeals={memoizedFilteredMeals}
+        filteredMeals={filteredMealList}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onSelectMeal={handleSelectMeal}

@@ -27,8 +27,8 @@ export const useDailyMeal = (dateString, mealId, meals, onMealSelected) => {
     setSearchQuery
   );
 
-  const selectedMeal = meals.find((meal) => meal.id === mealId);
-  const memoizedFilteredMeals = useMemo(() => filteredMeals(meals), [meals, filteredMeals]);
+  const selectedMeal = useMemo(() => meals.find((meal) => meal.id === mealId), [meals, mealId]);
+  const filteredMealList = useMemo(() => filteredMeals(meals), [meals, filteredMeals]);
 
   return {
     isOpen,
@@ -36,7 +36,7 @@ export const useDailyMeal = (dateString, mealId, meals, onMealSelected) => {
     closeSheet,
     searchQuery,
     setSearchQuery,
-    filteredMeals: memoizedFilteredMeals,
+    filteredMealList,
     handleSelectMeal,
     handleClearMeal,
     selectedMeal,

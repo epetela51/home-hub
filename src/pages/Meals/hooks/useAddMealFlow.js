@@ -9,7 +9,7 @@ import { useAddMeal } from './useAddMeal';
  * @param {Function} onMealAdded - Callback that receives the new meal object with ID
  * @returns {Object} Object containing { handleAddMeal, isSuccessful, formResetKey }
  */
-export const useHandleAddMeal = (onMealAdded) => {
+export const useAddMealFlow = (onMealAdded) => {
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [formResetKey, setFormResetKey] = useState(0);
   const addMeal = useAddMeal();

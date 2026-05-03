@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useMealPlan } from '../hooks/useMealPlan';
-import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
+import { useWeekReset } from '../hooks/useWeekReset';
 import { useFetchMeals } from '../hooks/useFetchMeals';
-import { useResetWeek } from '../hooks/useResetWeek';
 import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 
 import Button from '../../../components/Button/Button';
@@ -22,10 +21,7 @@ const Meals = () => {
   // Get dates for the selected week
   const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
 
-  const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
-
-  const { handleResetWeek } = useResetWeek(
-    resetWeeklyPlan,
+  const { handleResetWeek, isResetting } = useWeekReset(
     resetMealPlan,
     setWeeklyPlan,
     weekDates,

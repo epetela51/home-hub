@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 
 /**
  * Custom hook for managing the meal library editor state and actions.
- * Handles state management for expanded rows, edit modal, and all related actions.
+ * Handles state management for expanded rows, edit modal, assignment modal, and all related actions.
  *
  * @param {Array} meals - Array of all meals
  * @param {Function} setMeals - Setter for meals array
@@ -12,17 +12,23 @@ import { useState, useCallback } from 'react';
  *   - expandedMealId: ID of the currently expanded meal (null if none)
  *   - selectedMealForEdit: Meal object being edited (null if none)
  *   - isModalOpen: Whether the edit modal is open
+ *   - selectedMealForAssignment: Meal object being assigned to a date (null if none)
+ *   - isAssignModalOpen: Whether the assignment modal is open
  *   Handlers:
  *   - handleToggleMeal: Toggle expand/collapse for a meal row
  *   - handleEditMeal: Open edit modal for a meal
  *   - handleDeleteMealClick: Delete a meal
  *   - handleMealUpdated: Update meal data after successful edit
  *   - handleModalClose: Close the edit modal
+ *   - handleOpenAssignModal: Open assignment modal for a meal
+ *   - handleCloseAssignModal: Close the assignment modal
  */
 export const useMealLibraryEditor = (meals, setMeals, performDelete) => {
   const [expandedMealId, setExpandedMealId] = useState(null);
   const [selectedMealForEdit, setSelectedMealForEdit] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMealForAssignment, setSelectedMealForAssignment] = useState(null);
+  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
 
   const handleToggleMeal = useCallback((mealId) => {
     setExpandedMealId((prevId) => (prevId === mealId ? null : mealId));
@@ -63,6 +69,16 @@ export const useMealLibraryEditor = (meals, setMeals, performDelete) => {
     setSelectedMealForEdit(null);
   }, []);
 
+  const handleOpenAssignModal = useCallback((meal) => {
+    setSelectedMealForAssignment(meal);
+    setIsAssignModalOpen(true);
+  }, []);
+
+  const handleCloseAssignModal = useCallback(() => {
+    setIsAssignModalOpen(false);
+    setSelectedMealForAssignment(null);
+  }, []);
+
   return {
     expandedMealId,
     selectedMealForEdit,
@@ -72,5 +88,9 @@ export const useMealLibraryEditor = (meals, setMeals, performDelete) => {
     handleDeleteMealClick,
     handleMealUpdated,
     handleModalClose,
+    selectedMealForAssignment,
+    isAssignModalOpen,
+    handleOpenAssignModal,
+    handleCloseAssignModal,
   };
 };

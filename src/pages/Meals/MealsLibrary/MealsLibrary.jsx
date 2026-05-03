@@ -5,11 +5,13 @@ import { useMealsLibraryForm } from '../hooks/useMealsLibraryForm';
 import { useMealLibraryEditor } from '../hooks/useMealLibraryEditor';
 import { useMealLibraryStateSync } from '../hooks/useMealLibraryStateSync';
 import { useDeleteMeal } from '../hooks/useDeleteMeal';
+import { useAssignMealToDate } from '../hooks/useAssignMealToDate';
 
 import TextInput from '../../../components/TextInput/TextInput';
 import Button from '../../../components/Button/Button';
 import ExpandableMealListItem from './ExpandableMealListItem';
 import MealEditModal from './MealEditModal';
+import AssignMealModal from './AssignMealModal';
 import NewMeals from '../NewMeals/NewMeals';
 
 /**
@@ -31,7 +33,13 @@ const MealsLibrary = () => {
     handleDeleteMealClick,
     handleMealUpdated,
     handleModalClose,
+    selectedMealForAssignment,
+    isAssignModalOpen,
+    handleOpenAssignModal,
+    handleCloseAssignModal,
   } = useMealLibraryEditor(meals, setMeals, performDelete);
+
+  const assignMealToDate = useAssignMealToDate();
 
   useMealLibraryStateSync(isFormOpen, expandedMealId, handleToggleMeal);
 
@@ -80,6 +88,7 @@ const MealsLibrary = () => {
                   onToggle={() => handleToggleMeal(meal.id)}
                   onEdit={() => handleEditMeal(meal)}
                   onDelete={() => handleDeleteMealClick(meal.id)}
+                  onAssign={() => handleOpenAssignModal(meal)}
                 />
               ))}
             </div>
@@ -99,6 +108,15 @@ const MealsLibrary = () => {
         meal={selectedMealForEdit}
         onClose={handleModalClose}
         onMealUpdated={handleMealUpdated}
+      />
+
+      {/* Assign Meal to Date Modal */}
+      <AssignMealModal
+        isOpen={isAssignModalOpen}
+        mealId={selectedMealForAssignment?.id}
+        mealName={selectedMealForAssignment?.meal}
+        onClose={handleCloseAssignModal}
+        onAssign={assignMealToDate}
       />
     </div>
   );

@@ -1,0 +1,72 @@
+import { useState, useCallback, useMemo } from 'react';
+import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
+
+/**
+ * Custom hook to manage state for the AssignMealModal.
+ * Handles week navigation, date selection, and submission handlers.
+ *
+ * @param {string} mealId - ID of the meal being assigned
+ * @param {Function} onAssign - Callback when meal is assigned (mealId, dateString) => void
+ * @param {Function} onClose - Callback when modal should close
+ * @returns {Object} containing:
+ *   - weekOffset: current week offset (-1, 0, 1)
+ *   - selectedDateString: currently selected date (YYYY-MM-DD or null)
+ *   - weekDates: date objects for the current week
+ *   - handlePreviousWeek: navigate to previous week
+ *   - handleNextWeek: navigate to next week
+ *   - handleSelectDate: select a date
+ *   - handleSubmit: submit and assign meal
+ *   - handleCancel: cancel assignment
+ */
+export const useAssignMealModalState = (mealId, onAssign, onClose) => {
+  const [weekOffset, setWeekOffset] = useState(0);
+  const [selectedDateString, setSelectedDateString] = useState(null);
+
+  // Calculate week dates based on offset
+  const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
+
+  const handlePreviousWeek = useCallback(() => {
+    setWeekOffset((prev) => Math.max(prev - 1, -1));
+  }, []);
+
+  const handleNextWeek = useCallback(() => {
+    setWeekOffset((prev) => Math.min(prev + 1, 1));
+  }, []);
+
+  const handleSelectDate = useCallback(
+    (dayName) => {
+      const date = weekDates[dayName];
+      setSelectedDateString(formatDateToString(date));
+    },
+    [weekDates]
+  );
+
+  const handleReset = useCallback(() => {
+    setWeekOffset(0);
+    setSelectedDateString(null);
+  }, []);
+
+  const handleSubmit = useCallback(() => {
+    if (selectedDateString && mealId) {
+      onAssign(mealId, selectedDateString);
+      handleReset();
+      onClose();
+    }
+  }, [selectedDateString, mealId, onAssign, handleReset, onClose]);
+
+  const handleCancel = useCallback(() => {
+    handleReset();
+    onClose();
+  }, [handleReset, onClose]);
+
+  return {
+    weekOffset,
+    selectedDateString,
+    weekDates,
+    handlePreviousWeek,
+    handleNextWeek,
+    handleSelectDate,
+    handleSubmit,
+    handleCancel,
+  };
+};

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { formatDayAndDate, parseLocalDate } from '../../../utils/getWeekDates';
 import { useDailyMeal } from '../hooks/useDailyMeal';
+import { useNoteModal } from '../hooks/useNoteModal';
 
 import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
-import Modal from '../../../components/Modal/Modal';
+import NoteModal from '../components/NoteModal';
 
 const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) => {
-  const [noteModalOpen, setNoteModalOpen] = useState(false);
-  const [noteContent, setNoteContent] = useState('');
+  const { isOpen: noteModalOpen, noteContent, openNote, closeNote } = useNoteModal();
 
   const {
     isOpen,
@@ -32,14 +32,8 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
   const handleNoteButtonClick = (e) => {
     e.stopPropagation();
     if (selectedMeal?.note) {
-      setNoteContent(selectedMeal.note);
-      setNoteModalOpen(true);
+      openNote(selectedMeal.note);
     }
-  };
-
-  const handleCloseNoteModal = () => {
-    setNoteModalOpen(false);
-    setNoteContent('');
   };
 
   return (
@@ -91,21 +85,7 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
       />
 
       {/* Note Modal */}
-      <Modal isOpen={noteModalOpen} onBackdropClick={handleCloseNoteModal}>
-        <div className="space-y-4">
-          <div className="relative flex justify-center">
-            <h2 className="text-xl font-semibold text-gray-900">Note</h2>
-            <button
-              onClick={handleCloseNoteModal}
-              className="absolute right-0 text-gray-500 hover:text-gray-700 transition-colors text-2xl leading-none"
-              aria-label="Close note"
-            >
-              ×
-            </button>
-          </div>
-          <p className="text-gray-700 whitespace-pre-wrap">{noteContent}</p>
-        </div>
-      </Modal>
+      <NoteModal isOpen={noteModalOpen} noteContent={noteContent} onClose={closeNote} />
     </>
   );
 };

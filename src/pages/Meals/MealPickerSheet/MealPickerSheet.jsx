@@ -41,7 +41,10 @@ const MealPickerSheet = ({
   return (
     <>
       {/* Backdrop overlay */}
-      <div onClick={onClose} className="fixed inset-0 z-40 bg-black/50 transition-opacity" />
+      <div
+        onClick={onClose}
+        className={`fixed inset-0 z-40 transition-opacity ${isAddMealModalOpen ? 'bg-black/70' : 'bg-black/50'}`}
+      />
 
       {/* Bottom sheet */}
       <div
@@ -85,6 +88,11 @@ const MealPickerSheet = ({
         <div className="overflow-y-auto flex-1">
           <MealList meals={filteredMeals} onSelectMeal={onSelectMeal} />
         </div>
+
+        {/* Dark overlay when add meal modal is open */}
+        {isAddMealModalOpen && (
+          <div className="absolute inset-0 z-40 bg-black/50 rounded-t-2xl pointer-events-none" />
+        )}
       </div>
 
       {/* Add Meal Modal */}

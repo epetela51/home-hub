@@ -14,7 +14,7 @@ const Modal = ({ isOpen, onBackdropClick, children }) => {
       {/* Backdrop overlay */}
       <div
         onClick={onBackdropClick}
-        className="fixed inset-0 z-40 bg-black/50 transition-opacity"
+        className="fixed inset-0 z-40 bg-black/70 transition-opacity"
       />
 
       {/* Modal */}

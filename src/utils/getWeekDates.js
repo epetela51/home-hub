@@ -1,9 +1,16 @@
 /**
- * Parse a date string (YYYY-MM-DD) as a local date, not UTC
- * CRITICAL: new Date('YYYY-MM-DD') parses as UTC, causing timezone offset issues.
+ * Parse a date string (YYYY-MM-DD) as a local date, not UTC.
+ *
+ * CRITICAL TIMEZONE FIX: new Date('YYYY-MM-DD') parses as UTC, causing timezone offset issues.
+ * Example without this fix:
+ *   User in EDT (UTC-4): new Date('2026-04-28') → April 27, 8:00 PM EDT (WRONG - previous day!)
+ *
  * This function ensures dates are parsed in the user's local timezone.
- * @param {string} dateString - date string in format YYYY-MM-DD
- * @returns {Date} Date object in local timezone
+ * Example with this fix:
+ *   User in EDT: parseLocalDate('2026-04-28') → April 28, 12:00 AM EDT (CORRECT)
+ *
+ * @param {string} dateString - Date string in format YYYY-MM-DD (e.g., '2026-04-28')
+ * @returns {Date} Date object at midnight in user's local timezone
  */
 export const parseLocalDate = (dateString) => {
   const [year, month, day] = dateString.split('-').map(Number);

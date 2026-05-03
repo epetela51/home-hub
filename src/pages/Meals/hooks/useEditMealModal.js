@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useHandleEditMeal } from './useHandleEditMeal';
+
+import { useEditMeal } from './useEditMeal';
 
 /**
  * Custom hook for managing meal edit modal logic.
@@ -15,11 +16,12 @@ import { useHandleEditMeal } from './useHandleEditMeal';
  */
 export const useEditMealModal = (meal, onClose, onMealUpdated) => {
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
-  const handleEditMeal = useHandleEditMeal();
+  const editMeal = useEditMeal();
 
   const handleSubmit = async ({ title, note }) => {
     try {
-      const updatedMeal = await handleEditMeal(meal.id, meal, {
+      const updatedMeal = await editMeal({
+        mealId: meal.id,
         meal: title,
         note,
       });

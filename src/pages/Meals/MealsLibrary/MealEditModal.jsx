@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useEditMealModal } from '../hooks/useEditMealModal';
 
 import MealForm from '../MealForm/MealForm';
@@ -19,7 +21,8 @@ const MealEditModal = ({ isOpen, meal, onClose, onMealUpdated }) => {
     onMealUpdated
   );
 
-  if (!isOpen || !meal) return null;
+  if (!isOpen) return null;
+  if (!meal) return null;
 
   return (
     <>

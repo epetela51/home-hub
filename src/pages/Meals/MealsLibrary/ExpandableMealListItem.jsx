@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * ExpandableMealListItem - A meal item that expands to reveal Edit/Delete action buttons.
  * Presentational component (UI only, parent handles state and callbacks).
@@ -53,4 +55,4 @@ const ExpandableMealListItem = ({ meal, isExpanded, onToggle, onEdit, onDelete }
   );
 };
 
-export default ExpandableMealListItem;
+export default React.memo(ExpandableMealListItem);

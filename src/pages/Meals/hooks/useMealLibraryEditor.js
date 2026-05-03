@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 /**
  * Custom hook for managing the meal library editor state and actions.
@@ -24,44 +24,44 @@ export const useMealLibraryEditor = (meals, setMeals, performDelete) => {
   const [selectedMealForEdit, setSelectedMealForEdit] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleToggleMeal = (mealId) => {
-    if (expandedMealId === mealId) {
-      setExpandedMealId(null);
-    } else {
-      setExpandedMealId(mealId);
-    }
-  };
+  const handleToggleMeal = useCallback((mealId) => {
+    setExpandedMealId((prevId) => (prevId === mealId ? null : mealId));
+  }, []);
 
-  const handleEditMeal = (meal) => {
+  const handleEditMeal = useCallback((meal) => {
     setSelectedMealForEdit(meal);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleDeleteMealClick = async (mealId) => {
-    try {
-      await performDelete(mealId);
-      // Remove deleted meal from list
-      setMeals((prevMeals) => prevMeals.filter((m) => m.id !== mealId));
+  const handleDeleteMealClick = useCallback(
+    async (mealId) => {
+      try {
+        await performDelete(mealId);
+        setMeals((prevMeals) => prevMeals.filter((m) => m.id !== mealId));
+        setExpandedMealId(null);
+      } catch (err) {
+        console.error('Failed to delete meal:', err);
+      }
+    },
+    [performDelete, setMeals]
+  );
+
+  const handleMealUpdated = useCallback(
+    (updatedMeal) => {
+      setMeals((prevMeals) =>
+        prevMeals.map((m) =>
+          m.id === updatedMeal.id ? { ...m, meal: updatedMeal.meal, note: updatedMeal.note } : m
+        )
+      );
       setExpandedMealId(null);
-    } catch (err) {
-      console.error('Failed to delete meal:', err);
-    }
-  };
+    },
+    [setMeals]
+  );
 
-  const handleMealUpdated = (updatedMeal) => {
-    // Update the meal in the list with the updated data
-    setMeals((prevMeals) =>
-      prevMeals.map((m) =>
-        m.id === updatedMeal.id ? { ...m, meal: updatedMeal.meal, note: updatedMeal.note } : m
-      )
-    );
-    setExpandedMealId(null);
-  };
-
-  const handleModalClose = () => {
+  const handleModalClose = useCallback(() => {
     setIsModalOpen(false);
     setSelectedMealForEdit(null);
-  };
+  }, []);
 
   return {
     expandedMealId,

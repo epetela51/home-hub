@@ -1,20 +1,20 @@
 import { useState } from 'react';
 
 export const useMealPlan = ({ initialMealPlan = {} }) => {
-  const [mealChange, setmealChange] = useState({});
+  const [mealChange, setMealChange] = useState({});
 
   // Merge initialMealPlan with user mealChange (mealChange override initial)
   const mealPlan = { ...initialMealPlan, ...mealChange };
 
   const handlePlanChange = (day, mealId) => {
-    setmealChange((prev) => ({
+    setMealChange((prev) => ({
       ...prev,
       [day]: mealId,
     }));
   };
 
   const resetMealPlan = () => {
-    setmealChange({});
+    setMealChange({});
   };
 
   return { mealPlan, handlePlanChange, resetMealPlan };

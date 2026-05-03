@@ -1,34 +1,25 @@
+import React from 'react';
 import { formatDayAndDate, parseLocalDate } from '../../../utils/getWeekDates';
-import { useMealPickerSheet } from '../hooks/useMealPickerSheet';
-import { useMealSearch } from '../hooks/useMealSearch';
-import { useSaveMealSelection } from '../hooks/useSaveMealSelection';
+import { useDailyMeal } from '../hooks/useDailyMeal';
 
 import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
 
 const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
-  const { isOpen, openSheet, closeSheet } = useMealPickerSheet();
-  const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
-  const saveMeal = useSaveMealSelection(onMealSelected);
-
-  const selectedMeal = meals.find((meal) => meal.id === mealId);
+  const {
+    isOpen,
+    openSheet,
+    closeSheet,
+    searchQuery,
+    setSearchQuery,
+    filteredMealList,
+    handleSelectMeal,
+    handleClearMeal,
+    selectedMeal,
+  } = useDailyMeal(dateString, mealId, meals, onMealSelected);
 
   // Parse as local date to avoid timezone offset (parseLocalDate handles YYYY-MM-DD correctly)
   const date = parseLocalDate(dateString);
   const formattedDate = formatDayAndDate(date);
-
-  const handleSelectMeal = (selectedMealId) => {
-    onMealSelected(dateString, selectedMealId);
-    saveMeal(dateString, selectedMealId, mealId);
-    closeSheet();
-    setSearchQuery('');
-  };
-
-  const handleClearMeal = () => {
-    onMealSelected(dateString, null);
-    saveMeal(dateString, null, mealId);
-    closeSheet();
-    setSearchQuery('');
-  };
 
   return (
     <>
@@ -56,7 +47,7 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
       <MealPickerSheet
         isOpen={isOpen}
         onClose={closeSheet}
-        filteredMeals={filteredMeals(meals)}
+        filteredMeals={filteredMealList}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onSelectMeal={handleSelectMeal}
@@ -67,4 +58,4 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
   );
 };
 
-export default DailyMeal;
+export default React.memo(DailyMeal);

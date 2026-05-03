@@ -1,19 +1,17 @@
 import { useMemo, useState } from 'react';
 import { useMealPlan } from '../hooks/useMealPlan';
-import { useResetWeeklyPlan } from '../hooks/useResetWeeklyPlan';
+import { useWeekReset } from '../hooks/useWeekReset';
 import { useFetchMeals } from '../hooks/useFetchMeals';
-import { useResetWeek } from '../hooks/useResetWeek';
 import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
+import { DAYS_OF_WEEK } from '../constants';
 
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
 import WeekNavigation from '../WeekNavigation/WeekNavigation';
 
-const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
 const Meals = () => {
   const [weekOffset, setWeekOffset] = useState(0);
-  const { meals, setMeals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
+  const { meals, weeklyPlan, setWeeklyPlan, isLoading } = useFetchMeals();
 
   const { mealPlan, handlePlanChange, resetMealPlan } = useMealPlan({
     initialMealPlan: weeklyPlan,
@@ -22,19 +20,12 @@ const Meals = () => {
   // Get dates for the selected week
   const weekDates = useMemo(() => getWeekDates(new Date(), weekOffset), [weekOffset]);
 
-  const { resetWeeklyPlan, isResetting } = useResetWeeklyPlan();
-
-  const { handleResetWeek } = useResetWeek(
-    setMeals,
-    resetWeeklyPlan,
+  const { handleResetWeek, isResetting } = useWeekReset(
     resetMealPlan,
     setWeeklyPlan,
     weekDates,
     DAYS_OF_WEEK
   );
-
-  // Memoize meals array so it only changes when content actually changes
-  const memoizedMeals = useMemo(() => meals, [meals]);
 
   return (
     <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-8">
@@ -68,7 +59,7 @@ const Meals = () => {
                     key={day}
                     dateString={dateString}
                     mealId={mealPlan[dateString]}
-                    meals={memoizedMeals}
+                    meals={meals}
                     onMealSelected={handlePlanChange}
                   />
                 );

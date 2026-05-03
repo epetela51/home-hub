@@ -3,12 +3,11 @@ import { useMealPlan } from '../hooks/useMealPlan';
 import { useWeekReset } from '../hooks/useWeekReset';
 import { useFetchMeals } from '../hooks/useFetchMeals';
 import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
+import { DAYS_OF_WEEK } from '../constants';
 
 import Button from '../../../components/Button/Button';
 import DailyMeal from '../DailyMeal/DailyMeal';
 import WeekNavigation from '../WeekNavigation/WeekNavigation';
-
-const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const Meals = () => {
   const [weekOffset, setWeekOffset] = useState(0);

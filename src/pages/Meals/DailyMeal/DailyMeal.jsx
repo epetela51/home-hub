@@ -1,33 +1,25 @@
 import React from 'react';
-import { useMemo } from 'react';
 import { formatDayAndDate, parseLocalDate } from '../../../utils/getWeekDates';
-import { useMealPickerSheet } from '../hooks/useMealPickerSheet';
-import { useMealSearch } from '../hooks/useMealSearch';
-import { useSaveMealSelection } from '../hooks/useSaveMealSelection';
-import { useDailyMealHandlers } from '../hooks/useDailyMealHandlers';
+import { useDailyMeal } from '../hooks/useDailyMeal';
 
 import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
 
 const DailyMeal = ({ dateString, mealId, meals, onMealSelected }) => {
-  const { isOpen, openSheet, closeSheet } = useMealPickerSheet();
-  const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
-  const saveMeal = useSaveMealSelection(onMealSelected);
-  const { handleSelectMeal, handleClearMeal } = useDailyMealHandlers(
-    dateString,
-    mealId,
-    onMealSelected,
-    saveMeal,
+  const {
+    isOpen,
+    openSheet,
     closeSheet,
-    setSearchQuery
-  );
-
-  const selectedMeal = meals.find((meal) => meal.id === mealId);
+    searchQuery,
+    setSearchQuery,
+    filteredMeals: memoizedFilteredMeals,
+    handleSelectMeal,
+    handleClearMeal,
+    selectedMeal,
+  } = useDailyMeal(dateString, mealId, meals, onMealSelected);
 
   // Parse as local date to avoid timezone offset (parseLocalDate handles YYYY-MM-DD correctly)
   const date = parseLocalDate(dateString);
   const formattedDate = formatDayAndDate(date);
-
-  const memoizedFilteredMeals = useMemo(() => filteredMeals(meals), [meals, filteredMeals]);
 
   return (
     <>

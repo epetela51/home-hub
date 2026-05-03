@@ -2,6 +2,7 @@ import { useFetchMeals } from '../hooks/useFetchMeals';
 import { useMealSearch } from '../hooks/useMealSearch';
 import { useMealsLibraryForm } from '../hooks/useMealsLibraryForm';
 import { useMealLibraryEditor } from '../hooks/useMealLibraryEditor';
+import { useMealLibraryStateSync } from '../hooks/useMealLibraryStateSync';
 import { useDeleteMeal } from '../hooks/useDeleteMeal';
 
 import TextInput from '../../../components/TextInput/TextInput';
@@ -30,6 +31,8 @@ const MealsLibrary = () => {
     handleMealUpdated,
     handleModalClose,
   } = useMealLibraryEditor(meals, setMeals, performDelete);
+
+  useMealLibraryStateSync(isFormOpen, expandedMealId, handleToggleMeal);
 
   const displayedMeals = filteredMeals(meals);
 

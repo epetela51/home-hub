@@ -1,9 +1,19 @@
 /**
  * Custom hook to save meal selection via API with optimistic update rollback.
- * Accepts callback to revert state if API fails.
+ * Implements optimistic update pattern: assumes success, reverts on API failure via callback.
  *
- * @param {Function} onSaveFailed - Callback to revert meal selection on API failure: (dateString, mealId) => void
- * @returns {Function} Handler function that takes (dateString, mealId, previousMealId) and returns a promise
+ * @param {Function} onSaveFailed - Callback invoked on API failure to revert optimistic update.
+ *   Signature: (dateString: string, previousMealId: string | null) => void
+ *   Called with the PREVIOUS meal ID to restore state to pre-update condition.
+ *   Example: If user changed 2026-04-28 from Pasta (id:5) to Salad (id:8), and API fails,
+ *   this is called as onSaveFailed('2026-04-28', 5) to restore Pasta.
+ *
+ * @returns {Function} Handler function
+ *   Signature: (dateString: string, mealId: string | null, previousMealId: string | null) => Promise
+ *   @param {string} dateString - Date in YYYY-MM-DD format
+ *   @param {string | null} mealId - New meal ID to save (null to clear meal)
+ *   @param {string | null} previousMealId - Previous meal ID (used for rollback)
+ *   @throws {Error} If API request fails
  */
 export const useSaveMealSelection = (onSaveFailed) => {
   const saveMeal = async (dateString, mealId, previousMealId) => {

@@ -3,8 +3,7 @@ import React from 'react';
 import MealListItem from '../MealListItem/MealListItem';
 
 /**
- * MealList - Reusable component for rendering a list of meals.
- * Used by both MealPickerSheet and MealsLibrary to avoid duplication.
+ * MealList - Component for rendering a list of meals in the meal picker sheet.
  *
  * @param {Array} meals - Array of meal objects to display
  * @param {Function} onSelectMeal - Callback when a meal is selected (optional)

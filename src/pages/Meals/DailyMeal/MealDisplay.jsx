@@ -13,7 +13,7 @@ const MealDisplay = ({ selectedMeal, dayAbbreviation, onNoteButtonClick }) => {
       {selectedMeal?.note && (
         <button
           onClick={onNoteButtonClick}
-          className="w-3 h-3 bg-green-500 rounded-full flex-shrink-0 hover:bg-green-600 transition-colors"
+          className="w-3 h-3 bg-blue-500 rounded-full flex-shrink-0 hover:bg-blue-600 transition-colors"
           title="View note"
           aria-label="View meal note"
         />

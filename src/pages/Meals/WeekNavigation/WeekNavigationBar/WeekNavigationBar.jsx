@@ -1,4 +1,4 @@
-import { getWeekLabel, getFormattedDateRange } from '../../../utils/getWeekDates';
+import { getWeekLabel, getFormattedDateRange } from '../../../../utils/getWeekDates';
 
 const WeekNavigationBar = ({ weekOffset, setWeekOffset, weekDates }) => {
   const handlePreviousWeek = () => {

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { useAssignMealModalState } from '../hooks/useAssignMealModalState';
+import { useAssignMealModalState } from '../../hooks/useAssignMealModalState';
 
-import Modal from '../../../components/Modal/Modal';
-import AssignMealModalHeader from './AssignMealModalHeader';
-import WeekNavigationSection from './WeekNavigationSection';
-import DaySelectionGrid from './DaySelectionGrid';
-import AssignmentActionButtons from './AssignmentActionButtons';
+import Modal from '../../../../components/Modal/Modal';
+import AssignMealModalHeader from '../AssignMealModalHeader/AssignMealModalHeader';
+import WeekNavigationSection from '../../WeekNavigation/WeekNavigationSection/WeekNavigationSection';
+import DaySelectionGrid from '../DaySelectionGrid/DaySelectionGrid';
+import AssignmentActionButtons from '../AssignmentActionButtons/AssignmentActionButtons';
 
 /**
  * AssignMealModal - Modal for assigning a meal to a specific day/date.

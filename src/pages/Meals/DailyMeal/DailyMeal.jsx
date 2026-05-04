@@ -3,10 +3,10 @@ import { formatDayAndDate, parseLocalDate } from '../../../utils/getWeekDates';
 import { useDailyMeal } from '../hooks/useDailyMeal';
 import { useNoteModal } from '../hooks/useNoteModal';
 
-import MealPickerSheet from '../MealPickerSheet/MealPickerSheet';
-import NoteModal from '../components/NoteModal';
-import DateBox from './DateBox';
-import MealDisplay from './MealDisplay';
+import MealPickerSheet from '../MealPickerSheet/MealPickerSheet/MealPickerSheet';
+import NoteModal from './NoteModal/NoteModal';
+import DateBox from '../DateBox/DateBox';
+import MealDisplay from '../MealDisplay/MealDisplay';
 
 const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) => {
   const { isOpen: noteModalOpen, noteContent, openNote, closeNote } = useNoteModal();

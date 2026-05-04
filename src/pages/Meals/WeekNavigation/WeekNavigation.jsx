@@ -2,7 +2,7 @@ import React from 'react';
 
 import { getWeekLabel, getFormattedDateRange } from '../../../utils/getWeekDates';
 
-import WeekNavigationButtons from './WeekNavigationButtons';
+import WeekNavigationButtons from './WeekNavigationButtons/WeekNavigationButtons';
 
 const WeekNavigation = ({ weekOffset, setWeekOffset, weekDates }) => {
   const handlePreviousWeek = () => {

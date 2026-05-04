@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MealListItem from './MealListItem';
+import MealListItem from '../MealListItem/MealListItem';
 
 /**
  * MealList - Reusable component for rendering a list of meals.

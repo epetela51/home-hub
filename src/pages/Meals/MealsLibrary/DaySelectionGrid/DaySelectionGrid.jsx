@@ -1,5 +1,5 @@
-import { formatDateToString, formatDayAndDate } from '../../../utils/getWeekDates';
-import { DAYS_OF_WEEK } from '../constants';
+import { formatDateToString, formatDayAndDate } from '../../../../utils/getWeekDates';
+import { DAYS_OF_WEEK } from '../../constants';
 
 /**
  * DaySelectionGrid - 7-day calendar for selecting the assignment date.

@@ -1,4 +1,4 @@
-import Modal from '../../../components/Modal/Modal';
+import Modal from '../../../../components/Modal/Modal';
 
 /**
  * NoteModal - Modal dialog for displaying meal notes.

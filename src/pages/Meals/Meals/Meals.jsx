@@ -6,8 +6,8 @@ import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 import { DAYS_OF_WEEK } from '../constants';
 
 import AppHeader from '../../../components/AppHeader/AppHeader';
-import MealsSubNav from '../components/MealsSubNav';
-import WeekNavigationBar from '../components/WeekNavigationBar';
+import MealsSubNav from '../MealsSubNav/MealsSubNav';
+import WeekNavigationBar from '../WeekNavigation/WeekNavigationBar/WeekNavigationBar';
 import DailyMeal from '../DailyMeal/DailyMeal';
 import ActionSection from '../../../components/ActionSection/ActionSection';
 

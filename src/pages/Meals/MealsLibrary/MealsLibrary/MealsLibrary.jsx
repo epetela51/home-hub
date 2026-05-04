@@ -1,19 +1,19 @@
 import { useMemo } from 'react';
-import { useFetchMeals } from '../hooks/useFetchMeals';
-import { useMealSearch } from '../hooks/useMealSearch';
-import { useMealsLibraryForm } from '../hooks/useMealsLibraryForm';
-import { useMealLibraryEditor } from '../hooks/useMealLibraryEditor';
-import { useMealLibraryStateSync } from '../hooks/useMealLibraryStateSync';
-import { useDeleteMeal } from '../hooks/useDeleteMeal';
-import { useAssignMealToDate } from '../hooks/useAssignMealToDate';
+import { useFetchMeals } from '../../hooks/useFetchMeals';
+import { useMealSearch } from '../../hooks/useMealSearch';
+import { useMealsLibraryForm } from '../../hooks/useMealsLibraryForm';
+import { useMealLibraryEditor } from '../../hooks/useMealLibraryEditor';
+import { useMealLibraryStateSync } from '../../hooks/useMealLibraryStateSync';
+import { useDeleteMeal } from '../../hooks/useDeleteMeal';
+import { useAssignMealToDate } from '../../hooks/useAssignMealToDate';
 
-import AppHeader from '../../../components/AppHeader/AppHeader';
-import MealsSubNav from '../components/MealsSubNav';
-import TextInput from '../../../components/TextInput/TextInput';
-import ExpandableMealListItem from './ExpandableMealListItem';
-import MealEditModal from './MealEditModal';
-import AssignMealModal from './AssignMealModal';
-import NewMeals from '../NewMeals/NewMeals';
+import AppHeader from '../../../../components/AppHeader/AppHeader';
+import MealsSubNav from '../../MealsSubNav/MealsSubNav';
+import TextInput from '../../../../components/TextInput/TextInput';
+import ExpandableMealListItem from '../ExpandableMealListItem/ExpandableMealListItem';
+import MealEditModal from '../MealEditModal/MealEditModal';
+import AssignMealModal from '../AssignMealModal/AssignMealModal';
+import NewMeals from '../../NewMeals/NewMeals';
 
 /**
  * MealsLibrary - Full-page view for browsing all meals with search functionality.

@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, Route, createRoutesFromElements } 
 import Home from './pages/Home/Home';
 import BreakerFinder from './pages/BreakerFinder/BreakerFinder';
 import Meals from './pages/Meals/Meals/Meals';
-import MealsLibrary from './pages/Meals/MealsLibrary/MealsLibrary';
+import MealsLibrary from './pages/Meals/MealsLibrary/MealsLibrary/MealsLibrary';
 
 import './App.css';
 

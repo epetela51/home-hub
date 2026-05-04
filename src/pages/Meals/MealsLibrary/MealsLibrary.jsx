@@ -7,8 +7,9 @@ import { useMealLibraryStateSync } from '../hooks/useMealLibraryStateSync';
 import { useDeleteMeal } from '../hooks/useDeleteMeal';
 import { useAssignMealToDate } from '../hooks/useAssignMealToDate';
 
+import AppHeader from '../../../components/AppHeader/AppHeader';
+import MealsSubNav from '../components/MealsSubNav';
 import TextInput from '../../../components/TextInput/TextInput';
-import Button from '../../../components/Button/Button';
 import ExpandableMealListItem from './ExpandableMealListItem';
 import MealEditModal from './MealEditModal';
 import AssignMealModal from './AssignMealModal';
@@ -47,78 +48,88 @@ const MealsLibrary = () => {
 
   if (isLoading) {
     return (
-      <div className="sm:px-4 py-6 max-w-5xl mx-auto">
-        <p className="text-2xl text-gray-600">Loading meals...</p>
-      </div>
+      <>
+        <AppHeader />
+        <MealsSubNav />
+        <div className="sm:px-4 py-6 max-w-5xl mx-auto">
+          <p className="text-2xl text-gray-600">Loading meals...</p>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-6">
-      <Button url="/meals" text="Back to Meals" />
+    <>
+      <AppHeader />
+      <MealsSubNav />
+      <div className="sm:px-4 py-6 max-w-5xl mx-auto space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-6">Meals Library</h1>
 
-      <div className="mt-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Meals Library</h1>
-
-        <div className="mb-6">
-          <TextInput value={searchQuery} onChange={setSearchQuery} placeholder="Search meals..." />
-        </div>
-
-        <button
-          onClick={handleToggleForm}
-          className="mb-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
-        >
-          {isFormOpen ? '✕ Cancel' : '+ Add New Meal'}
-        </button>
-
-        {isFormOpen && (
-          <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <NewMeals onMealAdded={handleMealAdded} />
+          <div className="mb-6">
+            <TextInput
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Search meals..."
+            />
           </div>
-        )}
 
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          {displayedMeals.length > 0 ? (
-            <div>
-              {displayedMeals.map((meal) => (
-                <ExpandableMealListItem
-                  key={meal.id}
-                  meal={meal}
-                  isExpanded={expandedMealId === meal.id}
-                  onToggle={() => handleToggleMeal(meal.id)}
-                  onEdit={() => handleEditMeal(meal)}
-                  onDelete={() => handleDeleteMealClick(meal.id)}
-                  onAssign={() => handleOpenAssignModal(meal)}
-                />
-              ))}
+          <button
+            onClick={handleToggleForm}
+            className="mb-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
+          >
+            {isFormOpen ? '✕ Cancel' : '+ Add New Meal'}
+          </button>
+
+          {isFormOpen && (
+            <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <NewMeals onMealAdded={handleMealAdded} />
             </div>
-          ) : (
-            <div className="px-4 py-6 text-center text-gray-500">No meals found</div>
           )}
+
+          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            {displayedMeals.length > 0 ? (
+              <div>
+                {displayedMeals.map((meal) => (
+                  <ExpandableMealListItem
+                    key={meal.id}
+                    meal={meal}
+                    isExpanded={expandedMealId === meal.id}
+                    onToggle={() => handleToggleMeal(meal.id)}
+                    onEdit={() => handleEditMeal(meal)}
+                    onDelete={() => handleDeleteMealClick(meal.id)}
+                    onAssign={() => handleOpenAssignModal(meal)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="px-4 py-6 text-center text-gray-500">No meals found</div>
+            )}
+          </div>
+
+          <div className="mt-4 text-sm text-gray-600">
+            Showing {displayedMeals.length} of {meals.length} meals
+          </div>
         </div>
 
-        <div className="mt-4 text-sm text-gray-600">
-          Showing {displayedMeals.length} of {meals.length} meals
-        </div>
+        {/* Edit Meal Modal */}
+        <MealEditModal
+          isOpen={isModalOpen}
+          meal={selectedMealForEdit}
+          onClose={handleModalClose}
+          onMealUpdated={handleMealUpdated}
+        />
+
+        {/* Assign Meal to Date Modal */}
+        <AssignMealModal
+          isOpen={isAssignModalOpen}
+          mealId={selectedMealForAssignment?.id}
+          mealName={selectedMealForAssignment?.meal}
+          onClose={handleCloseAssignModal}
+          onAssign={assignMealToDate}
+        />
       </div>
-
-      {/* Edit Meal Modal */}
-      <MealEditModal
-        isOpen={isModalOpen}
-        meal={selectedMealForEdit}
-        onClose={handleModalClose}
-        onMealUpdated={handleMealUpdated}
-      />
-
-      {/* Assign Meal to Date Modal */}
-      <AssignMealModal
-        isOpen={isAssignModalOpen}
-        mealId={selectedMealForAssignment?.id}
-        mealName={selectedMealForAssignment?.meal}
-        onClose={handleCloseAssignModal}
-        onAssign={assignMealToDate}
-      />
-    </div>
+    </>
   );
 };
 

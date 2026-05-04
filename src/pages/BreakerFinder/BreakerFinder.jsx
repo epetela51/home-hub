@@ -4,7 +4,7 @@ import { Home, Zap, Power, Lightbulb } from 'lucide-react';
 import homeData from '../../data/breakerData.json';
 import { useBreakerSelection } from './useBreakerSelection';
 
-import Button from '../../components/Button/Button';
+import AppHeader from '../../components/AppHeader/AppHeader';
 import SelectField from '../../components/SelectField/SelectField';
 import UnknownAccordion from '../../components/UnknownAccordian/UnknownAccordian';
 
@@ -79,92 +79,94 @@ const BreakerFinder = () => {
   };
 
   return (
-    <div className="min-h-screen p-4">
-      <Button url="/" text="Go Home" />
-      <div className="max-w-md mx-auto">
-        <div className="bg-white rounded-lg shadow-xl p-6 mb-4">
-          <div className="flex items-center justify-center mb-6">
-            <Home className="w-8 h-8 text-indigo-600 mr-3" />
-            <h1 className="text-2xl font-bold text-gray-800">Find That Breaker</h1>
-          </div>
+    <>
+      <AppHeader />
+      <div className="min-h-screen p-4">
+        <div className="max-w-md mx-auto">
+          <div className="bg-white rounded-lg shadow-xl p-6 mb-4">
+            <div className="flex items-center justify-center mb-6">
+              <Home className="w-8 h-8 text-indigo-600 mr-3" />
+              <h1 className="text-2xl font-bold text-gray-800">Find That Breaker</h1>
+            </div>
 
-          <div className="space-y-4">
-            <SelectField
-              label="Select Area"
-              value={selectedFloor}
-              onChange={handleFloorChange}
-              options={floors}
-              placeholder="choose an area..."
-            />
-
-            {selectedFloor && floorHasRooms && (
+            <div className="space-y-4">
               <SelectField
-                label="Select Room"
-                value={selectedRoom}
-                onChange={handleRoomChange}
-                options={rooms}
-                placeholder="Choose a room..."
+                label="Select Area"
+                value={selectedFloor}
+                onChange={handleFloorChange}
+                options={floors}
+                placeholder="choose an area..."
               />
-            )}
 
-            {selectedFloor && ((floorHasRooms && selectedRoom) || !floorHasRooms) && (
-              <SelectField
-                label="Select Type"
-                value={selectedType}
-                onChange={handleTypeChange}
-                options={types}
-                placeholder="Choose type..."
-                formatOption={(option) => option.charAt(0).toUpperCase() + option.slice(1)}
-              />
-            )}
+              {selectedFloor && floorHasRooms && (
+                <SelectField
+                  label="Select Room"
+                  value={selectedRoom}
+                  onChange={handleRoomChange}
+                  options={rooms}
+                  placeholder="Choose a room..."
+                />
+              )}
 
-            {selectedType && (
-              <SelectField
-                label="Select Item"
-                value={selectedItem}
-                onChange={handleItemChange}
-                options={items}
-                placeholder="Choose item..."
-              />
-            )}
-          </div>
+              {selectedFloor && ((floorHasRooms && selectedRoom) || !floorHasRooms) && (
+                <SelectField
+                  label="Select Type"
+                  value={selectedType}
+                  onChange={handleTypeChange}
+                  options={types}
+                  placeholder="Choose type..."
+                  formatOption={(option) => option.charAt(0).toUpperCase() + option.slice(1)}
+                />
+              )}
 
-          {breakerInfo && (
-            <div className="mt-6 p-4 bg-green-50 border-2 border-green-500 rounded-lg">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  {getTypeIcon(selectedType)}
-                  <span className="ml-2 text-sm text-gray-600">{selectedItem}</span>
+              {selectedType && (
+                <SelectField
+                  label="Select Item"
+                  value={selectedItem}
+                  onChange={handleItemChange}
+                  options={items}
+                  placeholder="Choose item..."
+                />
+              )}
+            </div>
+
+            {breakerInfo && (
+              <div className="mt-6 p-4 bg-green-50 border-2 border-green-500 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    {getTypeIcon(selectedType)}
+                    <span className="ml-2 text-sm text-gray-600">{selectedItem}</span>
+                  </div>
+                </div>
+                <div className="mt-3 p-3 bg-white rounded-md">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Breaker Location</p>
+                  <p className="text-2xl font-bold text-indigo-600 mt-1">{breakerInfo}</p>
                 </div>
               </div>
-              <div className="mt-3 p-3 bg-white rounded-md">
-                <p className="text-xs text-gray-500 uppercase tracking-wide">Breaker Location</p>
-                <p className="text-2xl font-bold text-indigo-600 mt-1">{breakerInfo}</p>
-              </div>
-            </div>
-          )}
+            )}
 
-          {(selectedFloor || selectedRoom || selectedType || selectedItem) && (
-            <button
-              onClick={resetSelections}
-              className="w-full mt-4 px-4 py-2 bg-green-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
-            >
-              Reset
-            </button>
-          )}
-        </div>
+            {(selectedFloor || selectedRoom || selectedType || selectedItem) && (
+              <button
+                onClick={resetSelections}
+                className="w-full mt-4 px-4 py-2 bg-green-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Reset
+              </button>
+            )}
+          </div>
 
-        <UnknownAccordion />
+          <UnknownAccordion />
 
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800">
-          <p className="font-semibold mb-1">⚠️ Safety Reminder</p>
-          <p>
-            Always turn off the main breaker before working on electrical systems or face the
-            consequences.
-          </p>
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800">
+            <p className="font-semibold mb-1">⚠️ Safety Reminder</p>
+            <p>
+              Always turn off the main breaker before working on electrical systems or face the
+              consequences.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

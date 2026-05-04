@@ -9,6 +9,7 @@ import AppHeader from '../../../components/AppHeader/AppHeader';
 import MealsSubNav from '../components/MealsSubNav';
 import WeekNavigationBar from '../components/WeekNavigationBar';
 import DailyMeal from '../DailyMeal/DailyMeal';
+import ActionSection from '../../../components/ActionSection/ActionSection';
 
 const Meals = () => {
   const [weekOffset, setWeekOffset] = useState(0);
@@ -43,13 +44,15 @@ const Meals = () => {
             setWeekOffset={setWeekOffset}
             weekDates={weekDates}
           />
-          <button
-            onClick={() => handleResetWeek(weekDates.Monday)}
-            disabled={isResetting}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition disabled:bg-red-300 disabled:cursor-not-allowed"
-          >
-            {isResetting ? 'Resetting...' : 'Reset Week'}
-          </button>
+          <ActionSection title="Reset Week">
+            <button
+              onClick={() => handleResetWeek(weekDates.Monday)}
+              disabled={isResetting}
+              className="w-full md:w-auto px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg hover:bg-gray-100 hover:border-gray-400 transition font-medium text-gray-900 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {isResetting ? 'Clearing...' : 'Clear All'}
+            </button>
+          </ActionSection>
           {isLoading ? (
             <p className="text-2xl text-gray-600">Loading meal plan for the week...</p>
           ) : (

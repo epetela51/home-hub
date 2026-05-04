@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { formatDateToString } from '../../../utils/getWeekDates';
-import { callMealMutationAPI } from '../utils/callMealMutationAPI';
+import { formatDateToString } from '../../../../utils/getWeekDates';
+import { callMealMutationAPI } from '../../utils/callMealMutationAPI';
 
 /**
  * Custom hook to reset the entire weekly meal plan.

@@ -1,4 +1,4 @@
-import { useEditMealModal } from '../../hooks/useEditMealModal';
+import { useEditMealModal } from './hooks/useEditMealModal';
 
 import Modal from '../../../../components/Modal/Modal';
 import MealForm from '../../shared/MealForm/MealForm';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAssignMealModalState } from '../../hooks/useAssignMealModalState';
+import { useAssignMealModalState } from './useAssignMealModalState';
 
 import Modal from '../../../../components/Modal/Modal';
 import AssignMealModalHeader from '../AssignMealModalHeader/AssignMealModalHeader';

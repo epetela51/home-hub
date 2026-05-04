@@ -1,4 +1,4 @@
-import { useAddMealFlow } from '../../hooks/useAddMealFlow';
+import { useAddMealFlow } from './useAddMealFlow';
 
 import MealForm from '../../shared/MealForm/MealForm';
 

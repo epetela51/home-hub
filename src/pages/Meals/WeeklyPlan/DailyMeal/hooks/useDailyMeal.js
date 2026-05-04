@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useMealSelectionSheet } from './useMealSelectionSheet';
-import { useMealSearch } from './useMealSearch';
-import { useSaveMealSelection } from './useSaveMealSelection';
+import { useMealSearch } from '../../../hooks/useMealSearch';
+import { useSaveMealSelection } from '../../../hooks/useSaveMealSelection';
 import { useDailyMealHandlers } from './useDailyMealHandlers';
 
 /**

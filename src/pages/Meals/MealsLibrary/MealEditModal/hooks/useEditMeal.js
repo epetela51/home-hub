@@ -1,4 +1,4 @@
-import { callMealMutationAPI } from '../utils/callMealMutationAPI';
+import { callMealMutationAPI } from '../../../utils/callMealMutationAPI';
 
 /**
  * Custom hook to edit an existing meal via API.

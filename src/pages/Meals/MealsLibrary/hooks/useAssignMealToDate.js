@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useSaveMealSelection } from './useSaveMealSelection';
+import { useSaveMealSelection } from '../../hooks/useSaveMealSelection';
 
 /**
  * Custom hook to handle meal assignment to a specific date.

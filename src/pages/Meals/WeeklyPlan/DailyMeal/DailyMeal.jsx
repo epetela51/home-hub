@@ -1,7 +1,7 @@
 import React from 'react';
 import { formatDayAndDate, parseLocalDate } from '../../../../utils/getWeekDates';
-import { useDailyMeal } from '../../hooks/useDailyMeal';
-import { useNoteModal } from '../../hooks/useNoteModal';
+import { useDailyMeal } from './hooks/useDailyMeal';
+import { useNoteModal } from './hooks/useNoteModal';
 
 import MealPickerSheet from '../MealPickerSheet/MealPickerSheet/MealPickerSheet';
 import NoteModal from './NoteModal/NoteModal';

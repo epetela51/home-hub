@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useAddMeal } from './useAddMeal';
+
+import { useAddMeal } from '../../hooks/useAddMeal';
 
 /**
  * Custom hook to handle the add meal form submission flow.

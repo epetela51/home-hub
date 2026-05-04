@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useAddMeal } from './useAddMeal';
+import { useAddMeal } from '../../hooks/useAddMeal';
 
 /**
  * Custom hook for managing meal add modal logic.

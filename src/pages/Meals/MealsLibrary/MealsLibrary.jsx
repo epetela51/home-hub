@@ -76,7 +76,7 @@ const MealsLibrary = () => {
 
           <button
             onClick={handleToggleForm}
-            className="mb-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium"
+            className="mb-6 w-full md:w-auto px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg hover:bg-gray-100 hover:border-gray-400 transition font-medium text-gray-900"
           >
             {isFormOpen ? '✕ Cancel' : '+ Add New Meal'}
           </button>

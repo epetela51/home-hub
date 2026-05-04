@@ -1,9 +1,9 @@
 import React from 'react';
 
-import TextInput from '../../../../components/TextInput/TextInput';
-import CloseButton from '../../../../components/CloseButton/CloseButton';
+import TextInput from '../../../../../components/TextInput/TextInput';
+import CloseButton from '../../../../../components/CloseButton/CloseButton';
 import MealList from '../MealList/MealList';
-import MealAddModal from '../../MealAddModal/MealAddModal';
+import MealAddModal from '../../../shared/MealAddModal/MealAddModal';
 
 /**
  * MealPickerSheet - Bottom sheet component for selecting meals.

@@ -1,6 +1,6 @@
-import { useAddMealModal } from '../hooks/useAddMealModal';
+import { useAddMealModal } from '../../hooks/useAddMealModal';
 
-import Modal from '../../../components/Modal/Modal';
+import Modal from '../../../../components/Modal/Modal';
 import MealForm from '../MealForm/MealForm';
 
 /**

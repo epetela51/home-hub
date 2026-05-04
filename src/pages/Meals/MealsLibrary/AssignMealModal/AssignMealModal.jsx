@@ -4,7 +4,7 @@ import { useAssignMealModalState } from '../../hooks/useAssignMealModalState';
 
 import Modal from '../../../../components/Modal/Modal';
 import AssignMealModalHeader from '../AssignMealModalHeader/AssignMealModalHeader';
-import WeekNavigationSection from '../../WeekNavigation/WeekNavigationSection/WeekNavigationSection';
+import WeekNavigationSection from '../../shared/WeekNavigation/WeekNavigationSection/WeekNavigationSection';
 import DaySelectionGrid from '../DaySelectionGrid/DaySelectionGrid';
 import AssignmentActionButtons from '../AssignmentActionButtons/AssignmentActionButtons';
 

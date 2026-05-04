@@ -6,9 +6,9 @@ import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
 import { DAYS_OF_WEEK } from '../constants';
 
 import AppHeader from '../../../components/AppHeader/AppHeader';
-import MealsSubNav from '../MealsSubNav/MealsSubNav';
-import WeekNavigationBar from '../WeekNavigation/WeekNavigationBar/WeekNavigationBar';
-import DailyMeal from '../DailyMeal/DailyMeal';
+import MealsSubNav from '../shared/MealsSubNav/MealsSubNav';
+import WeekNavigationBar from '../shared/WeekNavigation/WeekNavigationBar/WeekNavigationBar';
+import DailyMeal from './DailyMeal/DailyMeal';
 import ActionSection from '../../../components/ActionSection/ActionSection';
 
 const Meals = () => {

@@ -8,12 +8,12 @@ import { useDeleteMeal } from '../../hooks/useDeleteMeal';
 import { useAssignMealToDate } from '../../hooks/useAssignMealToDate';
 
 import AppHeader from '../../../../components/AppHeader/AppHeader';
-import MealsSubNav from '../../MealsSubNav/MealsSubNav';
+import MealsSubNav from '../../shared/MealsSubNav/MealsSubNav';
 import TextInput from '../../../../components/TextInput/TextInput';
 import ExpandableMealListItem from '../ExpandableMealListItem/ExpandableMealListItem';
 import MealEditModal from '../MealEditModal/MealEditModal';
 import AssignMealModal from '../AssignMealModal/AssignMealModal';
-import NewMeals from '../../NewMeals/NewMeals';
+import NewMeals from '../NewMeals/NewMeals';
 
 /**
  * MealsLibrary - Full-page view for browsing all meals with search functionality.

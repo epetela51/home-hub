@@ -1,4 +1,4 @@
-import { getWeekLabel, getFormattedDateRange } from '../../../../utils/getWeekDates';
+import { getWeekLabel, getFormattedDateRange } from '../../../../../utils/getWeekDates';
 
 /**
  * WeekNavigationSection - Week navigation controls and date range display.

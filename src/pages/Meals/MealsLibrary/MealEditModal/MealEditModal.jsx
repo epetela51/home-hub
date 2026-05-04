@@ -1,7 +1,7 @@
 import { useEditMealModal } from '../../hooks/useEditMealModal';
 
 import Modal from '../../../../components/Modal/Modal';
-import MealForm from '../../MealForm/MealForm';
+import MealForm from '../../shared/MealForm/MealForm';
 
 /**
  * MealEditModal - Modal dialog for editing a meal.

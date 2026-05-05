@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { getWeekDates, formatDateToString } from '../../../../utils/getWeekDates';
+import { getWeekDates } from '../../../../utils/getWeekDates';
+import { formatDateToString } from '../../../../utils/dateUtils';
 
 /**
  * Custom hook to manage state for the AssignMealModal.
@@ -42,10 +43,12 @@ export const useAssignMealModalState = (mealId, onAssign, onClose) => {
 
   const handlePreviousWeek = useCallback(() => {
     setWeekOffset((prev) => Math.max(prev - 1, -1));
+    setSelectedDateString(null);
   }, []);
 
   const handleNextWeek = useCallback(() => {
     setWeekOffset((prev) => Math.min(prev + 1, 1));
+    setSelectedDateString(null);
   }, []);
 
   const handleSelectDate = useCallback(

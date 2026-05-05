@@ -18,8 +18,10 @@ import AssignmentActionButtons from '../AssignmentActionButtons/AssignmentAction
  * @param {Function} onClose - Callback when modal should close
  * @param {Function} onAssign - Callback when a date is selected and submitted
  *   Signature: (mealId: string, dateString: string) => void
+ * @param {Object} weeklyPlan - Object mapping date strings (YYYY-MM-DD) to meal IDs
+ * @param {Array} meals - Array of meal objects with id and meal properties
  */
-const AssignMealModal = ({ isOpen, mealId, mealName, onClose, onAssign }) => {
+const AssignMealModal = ({ isOpen, mealId, mealName, onClose, onAssign, weeklyPlan, meals }) => {
   const {
     weekOffset,
     selectedDateString,
@@ -50,6 +52,8 @@ const AssignMealModal = ({ isOpen, mealId, mealName, onClose, onAssign }) => {
           weekDates={weekDates}
           onSelectDate={handleSelectDate}
           successMessage={successMessage}
+          weeklyPlan={weeklyPlan}
+          meals={meals}
         />
         <AssignmentActionButtons
           selectedDateString={selectedDateString}

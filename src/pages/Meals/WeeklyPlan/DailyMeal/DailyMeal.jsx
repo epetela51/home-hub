@@ -1,5 +1,6 @@
 import React from 'react';
-import { formatDayAndDate, parseLocalDate } from '../../../../utils/getWeekDates';
+import { parseLocalDate } from '../../../../utils/getWeekDates';
+import { formatDayAndDate } from '../../../../utils/dateUtils';
 import { useDailyMeal } from './hooks/useDailyMeal';
 import { useNoteModal } from './hooks/useNoteModal';
 

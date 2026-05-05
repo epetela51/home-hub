@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { formatDateToString } from '../../../../utils/getWeekDates';
+import { formatDateToString } from '../../../../utils/dateUtils';
 import { callMealMutationAPI } from '../../utils/callMealMutationAPI';
 
 /**

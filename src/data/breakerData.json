@@ -170,12 +170,18 @@
       "outlets": {
         "Inside cabinet (under TV)": "26",
         "Wall next to yard with 2 windows (xmas tree & dehumidifier/well system)": "26",
-        "Back wall between well system and door to garage": "29"
+        "Back wall between well system and door to garage": "29",
+        "Wall on the other side of the workshop": "39"
       },
       "lights": {
         "Recessed in front of front wall (TV)": "27",
         "Back wall next to well system/across from mechanical room and middle of ceiling": "29",
         "Bottom of stairs light": "21"
+      }
+    },
+    "Workshop": {
+      "outlets": {
+        "Above Workbench": "39"
       }
     },
     "Well Room": {

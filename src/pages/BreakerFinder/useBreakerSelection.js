@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export const useBreakerSelection = () => {
   const [selectedFloor, setSelectedFloor] = useState('');
@@ -6,34 +6,35 @@ export const useBreakerSelection = () => {
   const [selectedType, setSelectedType] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
 
-  const handleFloorChange = (value) => {
+  // Memoize handlers to prevent unnecessary re-renders of child components
+  const handleFloorChange = useCallback((value) => {
     setSelectedFloor(value);
     setSelectedRoom('');
     setSelectedType('');
     setSelectedItem('');
-  };
+  }, []);
 
-  const handleRoomChange = (value) => {
+  const handleRoomChange = useCallback((value) => {
     setSelectedRoom(value);
     setSelectedType('');
     setSelectedItem('');
-  };
+  }, []);
 
-  const handleTypeChange = (value) => {
+  const handleTypeChange = useCallback((value) => {
     setSelectedType(value);
     setSelectedItem('');
-  };
+  }, []);
 
-  const handleItemChange = (value) => {
+  const handleItemChange = useCallback((value) => {
     setSelectedItem(value);
-  };
+  }, []);
 
-  const resetSelections = () => {
+  const resetSelections = useCallback(() => {
     setSelectedFloor('');
     setSelectedRoom('');
     setSelectedType('');
     setSelectedItem('');
-  };
+  }, []);
 
   return {
     selectedFloor,

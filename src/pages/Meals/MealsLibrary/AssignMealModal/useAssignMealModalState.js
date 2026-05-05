@@ -42,10 +42,12 @@ export const useAssignMealModalState = (mealId, onAssign, onClose) => {
 
   const handlePreviousWeek = useCallback(() => {
     setWeekOffset((prev) => Math.max(prev - 1, -1));
+    setSelectedDateString(null);
   }, []);
 
   const handleNextWeek = useCallback(() => {
     setWeekOffset((prev) => Math.min(prev + 1, 1));
+    setSelectedDateString(null);
   }, []);
 
   const handleSelectDate = useCallback(

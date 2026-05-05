@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Deployment script for breaker-finder to Raspberry Pi
+# Deployment script for home-hub to Raspberry Pi
 set -e  # Exit on any error
 
 echo "Building the application..."

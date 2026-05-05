@@ -1,4 +1,4 @@
-import { formatDateToString, formatDayAndDate } from '../../../../../utils/getWeekDates';
+import { formatDateToString, formatDayAndDate } from '../../../../../utils/dateUtils';
 
 /**
  * Get the formatted date string (YYYY-MM-DD) for display and comparison

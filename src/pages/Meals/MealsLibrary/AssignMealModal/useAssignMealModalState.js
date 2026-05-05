@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { getWeekDates, formatDateToString } from '../../../../utils/getWeekDates';
+import { getWeekDates } from '../../../../utils/getWeekDates';
+import { formatDateToString } from '../../../../utils/dateUtils';
 
 /**
  * Custom hook to manage state for the AssignMealModal.

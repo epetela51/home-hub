@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 import { useMealPlan } from './hooks/useMealPlan';
 import { useWeekReset } from './hooks/useWeekReset';
 import { useFetchMeals } from '../hooks/useFetchMeals';
-import { getWeekDates, formatDateToString } from '../../../utils/getWeekDates';
+import { getWeekDates } from '../../../utils/getWeekDates';
+import { formatDateToString } from '../../../utils/dateUtils';
 import { DAYS_OF_WEEK } from '../constants';
 
 import AppHeader from '../../../components/AppHeader/AppHeader';

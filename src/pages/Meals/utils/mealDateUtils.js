@@ -1,4 +1,4 @@
-import { formatDayAndDate, formatDateAsMonthDay } from '../../../utils/getWeekDates';
+import { formatDayAndDate, formatDateAsMonthDay } from '../../../utils/dateUtils';
 
 /**
  * Create a map of meal IDs to meal names for quick lookup.

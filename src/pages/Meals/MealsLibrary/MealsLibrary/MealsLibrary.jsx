@@ -128,6 +128,7 @@ const MealsLibrary = () => {
           onClose={handleCloseAssignModal}
           onAssign={assignMealToDate}
           weeklyPlan={weeklyPlan}
+          meals={meals}
         />
       </div>
     </>

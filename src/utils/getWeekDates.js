@@ -87,6 +87,17 @@ export const formatDayAndDate = (date) => {
 };
 
 /**
+ * Format date as MM/DD string
+ * @param {Date} date - the date to format
+ * @returns {string} date formatted as MM/DD (e.g., "05/15")
+ */
+export const formatDateAsMonthDay = (date) => {
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${month}/${day}`;
+};
+
+/**
  * Get week label based on week offset
  * @param {number} weekOffset - offset from current week (-1, 0, 1, etc.)
  * @returns {string} label for the week

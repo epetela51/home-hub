@@ -17,4 +17,4 @@ const ItemSelector = ({ value, options, onChange }) => {
   );
 };
 
-export default ItemSelector;
+export default React.memo(ItemSelector);

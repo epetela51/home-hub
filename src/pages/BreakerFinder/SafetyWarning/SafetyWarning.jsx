@@ -16,4 +16,4 @@ const SafetyWarning = () => {
   );
 };
 
-export default SafetyWarning;
+export default React.memo(SafetyWarning);

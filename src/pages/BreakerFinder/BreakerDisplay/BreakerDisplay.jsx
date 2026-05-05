@@ -39,4 +39,4 @@ const BreakerDisplay = ({ breakerInfo, selectedType, selectedItem }) => {
   );
 };
 
-export default BreakerDisplay;
+export default React.memo(BreakerDisplay);

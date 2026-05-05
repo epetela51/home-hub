@@ -1,10 +1,12 @@
+import { useMemo } from 'react';
+
 import homeData from '../../../data/breakerData.json';
 
 const KNOWN_TYPES = ['outlets', 'lights', 'appliances'];
 
 /**
  * Derives available filtering options based on selected floor and room
- * Returns arrays of available floors, rooms, types, and items
+ * Returns memoized arrays of available floors, rooms, types, and items
  * Also determines if the selected floor has a room structure
  */
 export const useBreakerFiltering = (selectedFloor, selectedRoom, selectedType) => {
@@ -17,29 +19,38 @@ export const useBreakerFiltering = (selectedFloor, selectedRoom, selectedType) =
     return !floorKeys.some((key) => KNOWN_TYPES.includes(key));
   };
 
-  const floors = Object.keys(homeData).filter((floor) => floor !== 'Unknowns');
   const floorHasRooms = selectedFloor ? hasRooms(selectedFloor) : false;
 
-  const rooms = selectedFloor && floorHasRooms ? Object.keys(homeData[selectedFloor]) : [];
+  const floors = useMemo(() => Object.keys(homeData).filter((floor) => floor !== 'Unknowns'), []);
 
-  // Types: if no rooms, get from floor directly; otherwise from room
-  const types = selectedFloor
-    ? floorHasRooms && selectedRoom
-      ? Object.keys(homeData[selectedFloor][selectedRoom])
-      : floorHasRooms
-        ? []
-        : Object.keys(homeData[selectedFloor])
-    : [];
+  const rooms = useMemo(
+    () => (selectedFloor && floorHasRooms ? Object.keys(homeData[selectedFloor]) : []),
+    [selectedFloor, floorHasRooms]
+  );
 
-  // Items: handle both cases (with and without rooms)
-  const items =
-    selectedFloor && selectedType
-      ? floorHasRooms && selectedRoom
-        ? Object.keys(homeData[selectedFloor][selectedRoom][selectedType])
-        : !floorHasRooms
-          ? Object.keys(homeData[selectedFloor][selectedType])
-          : []
-      : [];
+  const types = useMemo(
+    () =>
+      selectedFloor
+        ? floorHasRooms && selectedRoom
+          ? Object.keys(homeData[selectedFloor][selectedRoom])
+          : floorHasRooms
+            ? []
+            : Object.keys(homeData[selectedFloor])
+        : [],
+    [selectedFloor, selectedRoom, floorHasRooms]
+  );
+
+  const items = useMemo(
+    () =>
+      selectedFloor && selectedType
+        ? floorHasRooms && selectedRoom
+          ? Object.keys(homeData[selectedFloor][selectedRoom][selectedType])
+          : !floorHasRooms
+            ? Object.keys(homeData[selectedFloor][selectedType])
+            : []
+        : [],
+    [selectedFloor, selectedRoom, selectedType, floorHasRooms]
+  );
 
   return {
     floors,

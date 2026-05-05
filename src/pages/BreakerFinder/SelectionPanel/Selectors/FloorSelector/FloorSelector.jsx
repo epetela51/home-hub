@@ -17,4 +17,4 @@ const FloorSelector = ({ value, options, onChange }) => {
   );
 };
 
-export default FloorSelector;
+export default React.memo(FloorSelector);

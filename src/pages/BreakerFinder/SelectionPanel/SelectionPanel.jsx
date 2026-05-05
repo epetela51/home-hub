@@ -46,4 +46,4 @@ const SelectionPanel = ({
   );
 };
 
-export default SelectionPanel;
+export default React.memo(SelectionPanel);

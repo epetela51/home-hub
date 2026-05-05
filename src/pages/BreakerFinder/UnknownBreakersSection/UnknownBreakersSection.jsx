@@ -9,4 +9,4 @@ const UnknownBreakersSection = () => {
   return <UnknownAccordion />;
 };
 
-export default UnknownBreakersSection;
+export default React.memo(UnknownBreakersSection);

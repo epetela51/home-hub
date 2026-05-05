@@ -17,4 +17,4 @@ const RoomSelector = ({ value, options, onChange }) => {
   );
 };
 
-export default RoomSelector;
+export default React.memo(RoomSelector);

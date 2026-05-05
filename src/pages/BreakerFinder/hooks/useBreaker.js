@@ -5,9 +5,10 @@ import { useBreakerLookup } from './useBreakerLookup';
 /**
  * Wrapper hook that combines selection state with filtering and lookup logic
  * Provides a single hook for BreakerFinder to call, keeping the orchestrator clean
+ * Handlers are already memoized in useBreakerSelection
  */
 export const useBreaker = () => {
-  // Selection state and handlers
+  // Selection state and handlers (handlers are already memoized)
   const {
     selectedFloor,
     selectedRoom,
@@ -37,18 +38,17 @@ export const useBreaker = () => {
   );
 
   return {
-    // Selections
+    // Selections and handlers (from useBreakerSelection - handlers already memoized)
     selectedFloor,
     selectedRoom,
     selectedType,
     selectedItem,
-    // Handlers
     handleFloorChange,
     handleRoomChange,
     handleTypeChange,
     handleItemChange,
     resetSelections,
-    // Filtering results
+    // Filtering results (memoized in useBreakerFiltering)
     floors,
     rooms,
     types,

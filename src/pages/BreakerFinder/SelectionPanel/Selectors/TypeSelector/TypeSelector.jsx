@@ -18,4 +18,4 @@ const TypeSelector = ({ value, options, onChange }) => {
   );
 };
 
-export default TypeSelector;
+export default React.memo(TypeSelector);

@@ -25,6 +25,9 @@
       },
       "lights": {
         "Light above sink": "16"
+      },
+      "appliances": {
+        "Landing full bath vent fan": "18"
       }
     },
     "Maddies Room": {
@@ -179,11 +182,6 @@
         "Bottom of stairs light": "21"
       }
     },
-    "Workshop": {
-      "outlets": {
-        "Above Workbench": "39"
-      }
-    },
     "Well Room": {
       "lights": {
         "Well system pull string light": "21"
@@ -208,11 +206,14 @@
       "Garage doors": "13"
     }
   },
-  "Mechanical": {
+  "Workshop": {
     "appliances": {
       "AC - Outside compressor": "30 & 32",
       "AC - Air handler in attic": "34 & 36",
       "Boiler (heat & domestic hot water)": "20"
+    },
+    "outlets": {
+      "Above Workbench": "39"
     }
   },
   "Unknowns": {
@@ -225,9 +226,6 @@
     "lights": {
       "Light inside mechanical room": "Unknown",
       "Outside motion light off corner of living room": "Unknown"
-    },
-    "appliances": {
-      "Landing full bath vent fan": "Unknown"
     }
   }
 }

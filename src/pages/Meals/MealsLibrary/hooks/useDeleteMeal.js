@@ -1,4 +1,5 @@
 import { callMealMutationAPI } from '../../utils/callMealMutationAPI';
+import { getApiBaseUrl } from '@/config/apiConfig';
 
 /**
  * Custom hook to delete a meal from the API.
@@ -8,7 +9,8 @@ import { callMealMutationAPI } from '../../utils/callMealMutationAPI';
  */
 export const useDeleteMeal = () => {
   const deleteMeal = async (mealId) => {
-    return await callMealMutationAPI(`/api/v2/meals/${mealId}`, 'DELETE');
+    const apiBaseUrl = getApiBaseUrl();
+    return await callMealMutationAPI(`${apiBaseUrl}/v2/meals/${mealId}`, 'DELETE');
   };
 
   return deleteMeal;

@@ -1,3 +1,5 @@
+import { getApiBaseUrl } from '@/config/apiConfig';
+
 /**
  * Custom hook to save meal selection via API with optimistic update rollback.
  * Implements optimistic update pattern: assumes success, reverts on API failure via callback.
@@ -29,7 +31,8 @@ export const useSaveMealSelection = (onSaveFailed) => {
      * Still throws error so caller can handle if needed.
      */
     try {
-      const res = await fetch('/api/v2/daily-meal', {
+      const apiBaseUrl = getApiBaseUrl();
+      const res = await fetch(`${apiBaseUrl}/v2/daily-meal`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

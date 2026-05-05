@@ -21,7 +21,7 @@ import NewMeals from '../NewMeals/NewMeals';
  * Also includes a dynamic collapsible form to add new meals without leaving the page.
  */
 const MealsLibrary = () => {
-  const { meals, setMeals, isLoading } = useFetchMeals();
+  const { meals, setMeals, weeklyPlan, isLoading } = useFetchMeals();
   const { searchQuery, setSearchQuery, filteredMeals } = useMealSearch();
   const { isFormOpen, handleToggleForm, handleMealAdded } = useMealsLibraryForm(setMeals);
   const performDelete = useDeleteMeal();
@@ -127,6 +127,7 @@ const MealsLibrary = () => {
           mealName={selectedMealForAssignment?.meal}
           onClose={handleCloseAssignModal}
           onAssign={assignMealToDate}
+          weeklyPlan={weeklyPlan}
         />
       </div>
     </>

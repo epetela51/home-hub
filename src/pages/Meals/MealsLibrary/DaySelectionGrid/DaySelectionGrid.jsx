@@ -1,6 +1,6 @@
-import { formatDateToString, formatDayAndDate } from '../../../../utils/getWeekDates';
 import { DAYS_OF_WEEK } from '../../constants';
 import SelectedDateInfo from './SelectedDateInfo/SelectedDateInfo';
+import DayCard from './DayCard/DayCard';
 
 /**
  * DaySelectionGrid - 7-day calendar for selecting the assignment date.
@@ -25,34 +25,16 @@ const DaySelectionGrid = ({
         meals={meals}
       />
       <div className="grid grid-cols-2 gap-2">
-        {DAYS_OF_WEEK.map((dayName) => {
-          const date = weekDates[dayName];
-          const dateString = formatDateToString(date);
-          const { day: dayAbbrev, date: dayOfMonth } = formatDayAndDate(date);
-          const isSelected = selectedDateString === dateString;
-          const isMealAssigned = weeklyPlan && weeklyPlan[dateString];
-
-          // Determine background color based on meal assignment status
-          let baseBackgroundClass = 'bg-white';
-          if (isMealAssigned) {
-            baseBackgroundClass = 'bg-green-100';
-          } else {
-            baseBackgroundClass = 'bg-red-100';
-          }
-
-          return (
-            <button
-              key={dayName}
-              onClick={() => onSelectDate(dayName)}
-              className={`p-3 rounded border-2 transition-all ${
-                isSelected ? 'border-indigo-600' : 'border-gray-200 hover:border-gray-300'
-              } ${baseBackgroundClass} text-center`}
-            >
-              <div className="text-xs font-semibold text-gray-600">{dayAbbrev}</div>
-              <div className="text-xl font-bold text-gray-900">{dayOfMonth}</div>
-            </button>
-          );
-        })}
+        {DAYS_OF_WEEK.map((dayName) => (
+          <DayCard
+            key={dayName}
+            dayName={dayName}
+            date={weekDates[dayName]}
+            selectedDateString={selectedDateString}
+            onSelectDate={onSelectDate}
+            weeklyPlan={weeklyPlan}
+          />
+        ))}
       </div>
     </div>
   );

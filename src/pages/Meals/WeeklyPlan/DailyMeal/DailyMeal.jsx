@@ -1,6 +1,7 @@
 import React from 'react';
+
 import { parseLocalDate } from '../../../../utils/getWeekDates';
-import { formatDayAndDate } from '../../../../utils/dateUtils';
+import { formatDayAndDate, formatDateToString } from '../../../../utils/dateUtils';
 import { useDailyMeal } from './hooks/useDailyMeal';
 import { useNoteModal } from './hooks/useNoteModal';
 
@@ -32,6 +33,10 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
   const date = parseLocalDate(dateString);
   const formattedDate = formatDayAndDate(date);
 
+  // Check if this is today's date
+  const todayString = formatDateToString(new Date());
+  const isToday = dateString === todayString;
+
   const handleNoteButtonClick = (e) => {
     e.stopPropagation();
     if (selectedMeal?.note) {
@@ -43,7 +48,11 @@ const DailyMeal = ({ dateString, mealId, meals, onMealSelected, onMealAdded }) =
     <>
       <div
         onClick={openSheet}
-        className="flex gap-4 p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+        className={`flex gap-4 p-4 rounded-lg transition-shadow cursor-pointer ${
+          isToday
+            ? 'border-2 border-black shadow-lg'
+            : 'border border-gray-200 shadow-sm hover:shadow-md'
+        }`}
       >
         <DateBox formattedDate={formattedDate} />
         <MealDisplay

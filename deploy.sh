@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Deployment script for breaker-finder to Raspberry Pi
+# Deployment script for home-hub to Raspberry Pi
 set -e  # Exit on any error
 
 echo "Building the application..."
@@ -15,7 +15,7 @@ fi
 PI_USER="ericpetela"
 PI_HOST="192.168.4.195"
 TEMP_DIR="/tmp/react-app"
-WEB_DIR="/var/www/home-app"
+WEB_DIR="/var/www/home-hub"
 
 echo "Copying files to Raspberry Pi..."
 scp -r dist/* ${PI_USER}@${PI_HOST}:${TEMP_DIR}

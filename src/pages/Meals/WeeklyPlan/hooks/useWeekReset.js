@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { formatDateToString } from '../../../../utils/dateUtils';
 import { callMealMutationAPI } from '../../utils/callMealMutationAPI';
+import { getApiBaseUrl } from '@/config/apiConfig';
 
 /**
  * Custom hook to reset the entire weekly meal plan.
@@ -20,8 +21,9 @@ export const useWeekReset = (resetMealPlan, setWeeklyPlan, weekDates, daysOfWeek
     async (startDate) => {
       setIsResetting(true);
       try {
+        const apiBaseUrl = getApiBaseUrl();
         // Make API call
-        await callMealMutationAPI('/api/v2/weekly-plan', 'DELETE', {
+        await callMealMutationAPI(`${apiBaseUrl}/v2/weekly-plan`, 'DELETE', {
           start_date: formatDateToString(startDate),
         });
 

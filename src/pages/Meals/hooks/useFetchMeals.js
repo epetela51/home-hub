@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getApiBaseUrl } from '@/config/apiConfig';
 
 /**
  * Custom hook to fetch meals data from the API.
@@ -14,7 +15,8 @@ export const useFetchMeals = () => {
   useEffect(() => {
     const fetchMealsData = async () => {
       try {
-        const res = await fetch('/api/v2/meals');
+        const apiBaseUrl = getApiBaseUrl();
+        const res = await fetch(`${apiBaseUrl}/v2/meals`);
         const data = await res.json();
         setMeals(data.meals);
         setWeeklyPlan(data.weeklyPlan);

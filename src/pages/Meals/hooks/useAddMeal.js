@@ -1,4 +1,5 @@
 import { callMealMutationAPI } from '../utils/callMealMutationAPI';
+import { getApiBaseUrl } from '@/config/apiConfig';
 
 /**
  * Custom hook to add a new meal via API.
@@ -15,7 +16,8 @@ export const useAddMeal = () => {
       note: note || null,
     };
 
-    const data = await callMealMutationAPI('/api/v2/meals', 'POST', payload);
+    const apiBaseUrl = getApiBaseUrl();
+    const data = await callMealMutationAPI(`${apiBaseUrl}/v2/meals`, 'POST', payload);
     return data?.meal;
   };
 
